@@ -1,4 +1,4 @@
-<index html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -52,15 +52,21 @@
         .lang-btn:hover, .lang-btn.active-lang { filter: grayscale(0%); opacity: 1; transform: scale(1.15); background: rgba(255,255,255,0.05); }
         .view-section { display: none; opacity: 0; transition: opacity 0.3s ease-in-out; }
         .view-section.active-view { display: block; opacity: 1; }
+        .form-input { width: 100%; background-color: #0B0F15; border: 1px solid #1E293B; padding: 14px; border-radius: 4px; color: white; transition: border-color 0.3s; font-size: 0.875rem; }
+        .form-input:focus { outline: none; border-color: #2563EB; }
         .card-float { animation: float 6s ease-in-out infinite; }
         @keyframes float { 0% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-15px) rotate(1.5deg); } 100% { transform: translateY(0px) rotate(0deg); } }
+        .feature-icon-box { background: rgba(37, 99, 235, 0.1); border: 1px solid rgba(37, 99, 235, 0.2); }
+        .news-card:hover { background-color: #1a2230; }
     </style>
 </head>
 <body class="font-sans antialiased bg-alzent-bg flex flex-col min-h-screen">
 
+    <!-- NAVIGATION -->
     <nav class="fixed w-full z-50 bg-alzent-bg/95 backdrop-blur-md border-b border-alzent-border">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
+                <!-- LOGO -->
                 <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer" onclick="navigateTo('home')">
                     <div class="h-10 w-10 bg-white rounded flex items-center justify-center text-alzent-bg font-extrabold text-xl font-sans tracking-tighter">AD</div>
                     <div class="flex flex-col">
@@ -69,167 +75,611 @@
                     </div>
                 </div>
 
+                <!-- DESKTOP MENU -->
                 <div class="hidden lg:flex items-center gap-6">
                     <div class="flex items-baseline space-x-5">
-                        <button onclick="navigateTo('home')" class="nav-link hover-underline-animation text-xs font-bold text-alzent-subtext hover:text-white uppercase tracking-wider">Home</button>
-                        <button onclick="navigateTo('intelligence')" class="nav-link hover-underline-animation text-xs font-bold text-alzent-subtext hover:text-white uppercase tracking-wider">Intelligence</button>
+                        <button onclick="navigateTo('card')" class="nav-link hover-underline-animation text-xs font-bold text-alzent-subtext hover:text-white transition-colors uppercase tracking-wider" data-i18n="nav_cards">Alzent Card</button>
+                        <button onclick="navigateTo('intelligence')" class="nav-link hover-underline-animation text-xs font-bold text-alzent-subtext hover:text-white transition-colors uppercase tracking-wider" id="nav-intelligence" data-i18n="nav_intel">Intelligence</button>
+                        <button onclick="navigateTo('wealth')" class="nav-link hover-underline-animation text-xs font-bold text-alzent-subtext hover:text-white transition-colors uppercase tracking-wider" data-i18n="nav_wealth">Wealth</button>
+                        <button onclick="navigateTo('institutional')" class="nav-link hover-underline-animation text-xs font-bold text-alzent-subtext hover:text-white transition-colors uppercase tracking-wider" data-i18n="nav_inst">Institutional</button>
+                        <button onclick="navigateTo('why-us')" class="nav-link hover-underline-animation text-xs font-bold text-alzent-subtext hover:text-white transition-colors uppercase tracking-wider" data-i18n="nav_why">Why Alzent</button>
                     </div>
                     
+                    <!-- FLAGS -->
                     <div class="flex items-center gap-3 border-l border-alzent-border pl-6">
-                        <button onclick="changeLanguage('en')" class="lang-btn active-lang" id="lang-en">🇺🇸</button>
-                        <button onclick="changeLanguage('es')" class="lang-btn" id="lang-es">🇪🇸</button>
+                        <button onclick="changeLanguage('en')" class="lang-btn active-lang" id="lang-en" title="English">🇺🇸</button>
+                        <button onclick="changeLanguage('es')" class="lang-btn" id="lang-es" title="Español">🇪🇸</button>
+                        <button onclick="changeLanguage('pt')" class="lang-btn" id="lang-pt" title="Português">🇧🇷</button>
+                        <button onclick="changeLanguage('it')" class="lang-btn" id="lang-it" title="Italiano">🇮🇹</button>
+                        <button onclick="changeLanguage('ru')" class="lang-btn" id="lang-ru" title="Русский">🇷🇺</button>
+                        <button onclick="changeLanguage('zh')" class="lang-btn" id="lang-zh" title="中文">🇨🇳</button>
                     </div>
+                </div>
+
+                <!-- CTA -->
+                <div class="hidden lg:flex gap-4">
+                    <button class="text-white hover:text-alzent-accent font-bold text-xs px-2" data-i18n="btn_login">LOGIN</button>
+                    <button class="bg-white text-alzent-bg hover:bg-gray-200 font-extrabold text-xs px-5 py-2.5 rounded shadow-lg" data-i18n="btn_signup">GET THE CARD</button>
+                </div>
+
+                <!-- MOBILE MENU BUTTON -->
+                <div class="flex lg:hidden items-center gap-4">
+                    <button type="button" class="text-gray-400 hover:text-white p-2" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- MOBILE MENU CONTENT -->
+        <div class="hidden lg:hidden bg-alzent-card border-t border-alzent-border absolute w-full z-40" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <button onclick="navigateTo('card')" class="text-left w-full text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium" data-i18n="nav_cards">Alzent Card</button>
+                <button onclick="navigateTo('intelligence')" class="text-left w-full text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium" data-i18n="nav_intel">Intelligence</button>
+                <button onclick="navigateTo('wealth')" class="text-left w-full text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium" data-i18n="nav_wealth">Wealth</button>
+                <button onclick="navigateTo('institutional')" class="text-left w-full text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium" data-i18n="nav_inst">Institutional</button>
+                <button onclick="navigateTo('why-us')" class="text-left w-full text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium" data-i18n="nav_why">Why Alzent</button>
+                <div class="flex flex-wrap gap-4 p-4 border-t border-white/10 mt-2">
+                    <button onclick="changeLanguage('en')" class="text-xl">🇺🇸</button>
+                    <button onclick="changeLanguage('es')" class="text-xl">🇪🇸</button>
+                    <button onclick="changeLanguage('pt')" class="text-xl">🇧🇷</button>
+                    <button onclick="changeLanguage('it')" class="text-xl">🇮🇹</button>
+                    <button onclick="changeLanguage('ru')" class="text-xl">🇷🇺</button>
+                    <button onclick="changeLanguage('zh')" class="text-xl">🇨🇳</button>
                 </div>
             </div>
         </div>
     </nav>
 
+    <!-- VIEW: HOME -->
     <div id="view-home" class="view-section active-view flex-grow">
-        <section class="relative pt-36 pb-24 lg:pt-52 lg:pb-40 bg-subtle-gradient overflow-hidden">
+        <!-- HERO (Card Focus) -->
+        <section class="relative pt-36 pb-24 lg:pt-52 lg:pb-40 bg-subtle-gradient overflow-hidden border-b border-white/5">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center gap-16 relative z-10">
                 <div class="lg:w-3/5 text-left">
+                    <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-alzent-border bg-alzent-card mb-8">
+                        <span class="text-alzent-accent text-[10px] font-bold tracking-widest uppercase" data-i18n="hero_badge_title">Global Reach</span>
+                        <span class="h-3 w-px bg-alzent-border"></span>
+                        <span class="text-alzent-subtext text-[10px] uppercase font-mono" data-i18n="hero_badge_text">Worldwide Shipping Available</span>
+                    </div>
                     <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 leading-[1.0]">
-                        THE FUTURE OF <br>
-                        <span class="text-alzent-accent">GLOBAL SPENDING.</span>
+                        <span data-i18n="hero_title_1">THE FUTURE OF</span><br>
+                        <span class="text-alzent-accent" data-i18n="hero_title_2">GLOBAL SPENDING.</span>
                     </h1>
-                    <p class="mt-8 max-w-2xl text-lg md:text-xl text-alzent-subtext font-light">
-                        Institutional-grade digital asset cards available in over 150 countries.
+                    <p class="mt-8 max-w-2xl text-lg md:text-xl text-alzent-subtext font-light leading-relaxed" data-i18n="hero_desc">
+                        The ALZENT Mastercard® series bridges the gap between your digital assets and the global economy. Secure, institutional-grade, and available in over 150 countries.
                     </p>
-                    <div class="mt-12 flex gap-6">
-                        <button onclick="navigateTo('intelligence')" class="px-10 py-5 bg-alzent-accent text-white font-bold rounded shadow-2xl hover:bg-blue-600 transition-all text-sm">EXPLORE INTELLIGENCE</button>
+                    <div class="mt-12 flex flex-col sm:flex-row gap-6">
+                        <button onclick="navigateTo('card')" class="px-10 py-5 bg-alzent-accent text-white font-bold rounded shadow-2xl hover:bg-blue-600 transition-all text-sm tracking-widest" data-i18n="btn_get_card">CHOOSE YOUR CARD</button>
+                        <button onclick="navigateTo('institutional')" class="px-10 py-5 bg-transparent border border-alzent-border text-white font-bold rounded hover:bg-alzent-card hover:border-white transition-all text-sm tracking-widest" data-i18n="btn_expertise">INSTITUTIONAL ACCESS</button>
                     </div>
                 </div>
                 <div class="lg:w-2/5 flex justify-center relative">
-                    <div class="card-float w-[320px] h-[200px] rounded-2xl bg-gradient-to-br from-[#1E293B] to-[#0F172A] border border-white/10 p-8 flex flex-col justify-between shadow-2xl">
-                        <div class="text-white font-bold tracking-widest">ALZENT</div>
-                        <div class="text-white/50 font-mono">**** **** **** 8888</div>
+                    <div class="card-float relative z-10">
+                        <div class="w-[320px] sm:w-[400px] h-[200px] sm:h-[250px] rounded-2xl bg-gradient-to-br from-[#1E293B] to-[#0F172A] shadow-[0_40px_100px_rgba(0,0,0,0.8)] relative overflow-hidden p-8 flex flex-col justify-between border border-white/10">
+                            <div class="flex justify-between items-start">
+                                <div class="text-white font-sans font-bold tracking-[0.4em] text-xl">ALZENT</div>
+                                <div class="text-[10px] bg-white/5 border border-white/10 px-2 py-1 rounded text-alzent-accent font-bold" data-i18n="elite_badge">ELITE METAL</div>
+                            </div>
+                            <div class="flex justify-between items-end">
+                                <div><div class="text-alzent-subtext text-[8px] uppercase tracking-widest mb-1">WORLD ELITE</div><div class="text-white font-mono text-sm tracking-widest">#### #### #### 8888</div></div>
+                                <div class="flex -space-x-4">
+                                    <div class="w-10 h-10 rounded-full bg-[#EB001B]/95"></div>
+                                    <div class="w-10 h-10 rounded-full bg-[#F79E1B]/95"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CARD TIERS SECTION -->
+        <section id="card" class="py-32 bg-alzent-bg">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-24">
+                    <h2 class="text-4xl font-bold mb-6" data-i18n="card_tiers_title">TWO TIERS. ONE GLOBAL STANDARD.</h2>
+                    <p class="text-alzent-subtext text-lg max-w-2xl mx-auto" data-i18n="card_tiers_desc">From everyday utility to elite wealth management, select the card that matches your financial ambition.</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
+                    <!-- BASIC CARD -->
+                    <div class="premium-card p-10 rounded-3xl flex flex-col justify-between border-t-4 border-t-gray-500">
+                        <div>
+                            <div class="text-gray-500 font-bold tracking-widest text-xs mb-4 uppercase" data-i18n="tier_basic_label">Standard PVC</div>
+                            <h3 class="text-3xl font-bold text-white mb-6" data-i18n="tier_basic_title">Alzent Basic</h3>
+                            <ul class="space-y-4 mb-10">
+                                <li class="flex items-center gap-3 text-alzent-subtext text-sm"><i class="fa-solid fa-check text-alzent-accent"></i> <span data-i18n="basic_feat_1">Virtual & Physical PVC Card</span></li>
+                                <li class="flex items-center gap-3 text-alzent-subtext text-sm"><i class="fa-solid fa-check text-alzent-accent"></i> <span data-i18n="basic_feat_2">Standard Spending Limits</span></li>
+                                <li class="flex items-center gap-3 text-alzent-subtext text-sm"><i class="fa-solid fa-check text-alzent-accent"></i> <span data-i18n="basic_feat_3">0.5% Crypto Cashback</span></li>
+                                <li class="flex items-center gap-3 text-alzent-subtext text-sm"><i class="fa-solid fa-check text-alzent-accent"></i> <span data-i18n="basic_feat_4">Apple & Google Pay Ready</span></li>
+                            </ul>
+                        </div>
+                        <button class="w-full py-4 border border-alzent-border rounded-xl font-bold hover:bg-white hover:text-alzent-bg transition-all" data-i18n="btn_get_basic">ORDER BASIC</button>
+                    </div>
+
+                    <!-- ELITE METAL -->
+                    <div class="premium-card p-10 rounded-3xl flex flex-col justify-between border-t-4 border-t-alzent-accent bg-[rgba(37,99,235,0.02)]">
+                        <div>
+                            <div class="text-alzent-accent font-bold tracking-widest text-xs mb-4 uppercase" data-i18n="tier_elite_label">Elite Metal</div>
+                            <h3 class="text-3xl font-bold text-white mb-6" data-i18n="tier_elite_title">Alzent Metal</h3>
+                            <ul class="space-y-4 mb-10">
+                                <li class="flex items-center gap-3 text-alzent-subtext text-sm"><i class="fa-solid fa-star text-alzent-accent"></i> <span data-i18n="elite_feat_1">Hand-Crafted 18g Stainless Steel</span></li>
+                                <li class="flex items-center gap-3 text-alzent-subtext text-sm"><i class="fa-solid fa-star text-alzent-accent"></i> <span data-i18n="elite_feat_2">Institutional Spending Limits</span></li>
+                                <li class="flex items-center gap-3 text-alzent-subtext text-sm"><i class="fa-solid fa-star text-alzent-accent"></i> <span data-i18n="elite_feat_3">Up to 2% Crypto Cashback</span></li>
+                                <li class="flex items-center gap-3 text-alzent-subtext text-sm"><i class="fa-solid fa-star text-alzent-accent"></i> <span data-i18n="elite_feat_4">Priority Support & Global Shipping</span></li>
+                            </ul>
+                        </div>
+                        <button class="w-full py-4 bg-alzent-accent text-white rounded-xl font-bold hover:bg-blue-600 transition-all shadow-xl" data-i18n="btn_get_elite">ORDER METAL</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GLOBAL AVAILABILITY -->
+        <section class="py-24 bg-alzent-card border-y border-alzent-border">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <i class="fa-solid fa-truck-fast text-4xl text-alzent-accent mb-8"></i>
+                <h2 class="text-3xl font-bold mb-6" data-i18n="shipping_title">GLOBAL AVAILABILITY. FAST SHIPPING.</h2>
+                <p class="text-alzent-subtext text-lg max-w-2xl mx-auto leading-relaxed" data-i18n="shipping_desc">We deliver the ALZENT Mastercard® to virtually every corner of the world. Our logistics network ensures your bridge to digital finance arrives at your door.</p>
+                <div class="mt-10 flex justify-center gap-12 opacity-50 grayscale hover:grayscale-0 transition-all">
+                    <i class="fa-brands fa-fedex text-4xl"></i>
+                    <i class="fa-brands fa-dhl text-4xl"></i>
+                    <i class="fa-brands fa-ups text-4xl"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRIVATE WEALTH -->
+        <section id="wealth" class="py-32 bg-alzent-bg border-t border-alzent-border">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid md:grid-cols-2 gap-16 items-center">
+                    <div class="space-y-8">
+                        <h2 class="text-4xl font-bold" data-i18n="wealth_title">PRIVATE <span class="text-alzent-accent">WEALTH</span></h2>
+                        <p class="text-lg text-alzent-subtext leading-relaxed" data-i18n="wealth_desc">
+                            We bring the rigor of private finance to the digital asset space. Tailored for HNWIs who demand safety, yield, and personalized attention.
+                        </p>
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-4">
+                                <i class="fa-solid fa-check text-alzent-accent mt-1"></i>
+                                <div><strong class="text-white block text-sm mb-1" data-i18n="wealth_pt1_title">High-Yield Accounts</strong><span class="text-alzent-subtext text-sm" data-i18n="wealth_pt1_desc">Industry-leading returns on idle assets.</span></div>
+                            </li>
+                            <li class="flex items-start gap-4">
+                                <i class="fa-solid fa-check text-alzent-accent mt-1"></i>
+                                <div><strong class="text-white block text-sm mb-1" data-i18n="wealth_pt2_title">Collateralized Credit</strong><span class="text-alzent-subtext text-sm" data-i18n="wealth_pt2_desc">Access liquidity without selling assets.</span></div>
+                            </li>
+                            <li class="flex items-start gap-4">
+                                <i class="fa-solid fa-check text-alzent-accent mt-1"></i>
+                                <div><strong class="text-white block text-sm mb-1" data-i18n="wealth_pt3_title">Dedicated Manager</strong><span class="text-alzent-subtext text-sm" data-i18n="wealth_pt3_desc">24/7 priority support for your portfolio.</span></div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="premium-card p-8 rounded-xl border-l-4 border-l-alzent-accent">
+                        <div class="flex justify-between items-center mb-8 pb-8 border-b border-alzent-border">
+                            <div><div class="text-xs text-alzent-subtext uppercase tracking-wider mb-1">Portfolio Value</div><div class="text-3xl font-bold text-white">$2,840,500.00</div></div>
+                            <div class="text-right"><div class="text-xs text-alzent-subtext uppercase tracking-wider mb-1">YTD Return</div><div class="text-xl font-bold text-green-500">+14.2%</div></div>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center text-sm"><span class="text-alzent-subtext">BTC & ETH</span><span class="text-white font-mono">45%</span></div>
+                            <div class="w-full bg-alzent-bg h-2 rounded-full overflow-hidden"><div class="bg-alzent-accent h-full" style="width: 45%"></div></div>
+                            <div class="flex justify-between items-center text-sm pt-2"><span class="text-alzent-subtext">Stablecoins</span><span class="text-white font-mono">30%</span></div>
+                            <div class="w-full bg-alzent-bg h-2 rounded-full overflow-hidden"><div class="bg-white h-full" style="width: 30%"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- INSTITUTIONAL -->
+        <section id="institutional" class="py-32 bg-alzent-card">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-4xl font-bold mb-16" data-i18n="inst_title">INSTITUTIONAL <span class="text-alzent-accent">SERVICES</span></h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="premium-card p-10 text-center clickable-card rounded-xl" onclick="navigateTo('service-trading')">
+                        <i class="fa-solid fa-chart-line text-3xl text-white mb-8 card-icon"></i>
+                        <h3 class="text-xl font-bold text-white mb-4" data-i18n="srv_trading_title">Multi-Asset Trading</h3>
+                        <p class="text-sm text-alzent-subtext leading-relaxed mb-6" data-i18n="srv_trading_desc">Institutional-grade execution for FX, Crypto, and CFDs.</p>
+                        <span class="text-alzent-accent text-xs font-bold uppercase tracking-widest" data-i18n="btn_explore">Explore</span>
+                    </div>
+                    <div class="premium-card p-10 text-center clickable-card rounded-xl" onclick="navigateTo('service-tokenization')">
+                        <i class="fa-solid fa-layer-group text-3xl text-white mb-8 card-icon"></i>
+                        <h3 class="text-xl font-bold text-white mb-4" data-i18n="srv_token_title">RWA Tokenization</h3>
+                        <p class="text-sm text-alzent-subtext leading-relaxed mb-6" data-i18n="srv_token_desc">Unlock global liquidity by fractionalizing real-world assets.</p>
+                        <span class="text-alzent-accent text-xs font-bold uppercase tracking-widest" data-i18n="btn_explore">Explore</span>
+                    </div>
+                    <div class="premium-card p-10 text-center clickable-card rounded-xl" onclick="navigateTo('service-treasury')">
+                        <i class="fa-solid fa-globe text-3xl text-white mb-8 card-icon"></i>
+                        <h3 class="text-xl font-bold text-white mb-4" data-i18n="srv_treasury_title">Treasury Management</h3>
+                        <p class="text-sm text-alzent-subtext leading-relaxed mb-6" data-i18n="srv_treasury_desc">Optimize corporate yield and instant global settlement rails.</p>
+                        <span class="text-alzent-accent text-xs font-bold uppercase tracking-widest" data-i18n="btn_explore">Explore</span>
+                    </div>
+                    <div class="premium-card p-10 text-center clickable-card rounded-xl" onclick="navigateTo('service-otc')">
+                        <i class="fa-solid fa-hand-holding-dollar text-3xl text-white mb-8 card-icon"></i>
+                        <h3 class="text-xl font-bold text-white mb-4" data-i18n="srv_otc_title">OTC Desk</h3>
+                        <p class="text-sm text-alzent-subtext leading-relaxed mb-6" data-i18n="srv_otc_desc">Private, deep-liquidity block trading with zero slippage.</p>
+                        <span class="text-alzent-accent text-xs font-bold uppercase tracking-widest" data-i18n="btn_explore">Explore</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- WHY US -->
+        <section id="why-us" class="py-32 bg-alzent-bg border-t border-alzent-border">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="max-w-3xl mb-20">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-8" data-i18n="why_title">FINANCIAL HERITAGE. <br><span class="text-alzent-accent uppercase">Tech Power.</span></h2>
+                    <p class="text-alzent-subtext text-xl leading-relaxed" data-i18n="why_desc">
+                        Traditional finance is too slow; pure fintechs are too risky. ALZENT stands alone in the middle, combining safety with high-speed execution.
+                    </p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-10">
+                    <div class="p-10 rounded bg-alzent-bg border border-alzent-border premium-card">
+                        <i class="fa-solid fa-building-columns text-4xl text-white mb-8"></i>
+                        <h3 class="text-2xl font-bold text-white mb-4" data-i18n="why_c1_title">Financial Heritage</h3>
+                        <p class="text-alzent-subtext leading-relaxed" data-i18n="why_c1_desc">Leadership from top-tier institutions. We understand regulation, risk, and wealth preservation.</p>
+                    </div>
+                    <div class="p-10 rounded bg-alzent-bg border border-alzent-border premium-card">
+                        <i class="fa-solid fa-microchip text-4xl text-white mb-8"></i>
+                        <h3 class="text-2xl font-bold text-white mb-4" data-i18n="why_c2_title">Tech Superiority</h3>
+                        <p class="text-alzent-subtext leading-relaxed" data-i18n="why_c2_desc">Proprietary infrastructure ensures faster execution and institutional-grade reliability.</p>
+                    </div>
+                    <div class="p-10 rounded bg-alzent-bg border border-alzent-border premium-card">
+                        <i class="fa-solid fa-handshake text-4xl text-white mb-8"></i>
+                        <h3 class="text-2xl font-bold text-white mb-4" data-i18n="why_c3_title">Obsessive Service</h3>
+                        <p class="text-alzent-subtext leading-relaxed" data-i18n="why_c3_desc">Dedicated relationship managers who understand the specific needs of our global clients.</p>
                     </div>
                 </div>
             </div>
         </section>
     </div>
 
+    <!-- VIEW: MARKET INTELLIGENCE -->
     <div id="view-intelligence" class="view-section flex-grow pt-32 pb-24">
          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-5xl font-bold mb-12">Market Intelligence</h2>
-            <div class="grid lg:grid-cols-2 gap-12">
-                <div class="premium-card p-10 rounded-2xl border-l-4 border-l-alzent-accent">
-                    <h3 class="text-xl font-bold text-white mb-4">Global Insights</h3>
-                    <p class="text-alzent-subtext">Navega el mercado con datos institucionales de ALZENT.</p>
+            <h2 class="text-5xl font-bold mb-12" data-i18n="nav_intel">Intelligence</h2>
+            <div class="grid lg:grid-cols-5 gap-12">
+                <div class="lg:col-span-2">
+                     <div class="premium-card p-10 rounded-2xl border-l-4 border-l-alzent-accent">
+                        <h3 class="text-xl font-bold text-white mb-4" data-i18n="graph_title">Currency Devaluation</h3>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <button onclick="updateGraph('ARS')" class="currency-btn text-[11px] font-bold px-4 py-2 rounded bg-alzent-card text-white border border-alzent-border" data-currency="ARS">ARS</button>
+                            <button onclick="updateGraph('COP')" class="currency-btn text-[11px] font-bold px-4 py-2 rounded bg-transparent text-alzent-subtext" data-currency="COP">COP</button>
+                            <button onclick="updateGraph('BRL')" class="currency-btn text-[11px] font-bold px-4 py-2 rounded bg-transparent text-alzent-subtext" data-currency="BRL">BRL</button>
+                        </div>
+                        <div class="flex justify-center items-end h-40 gap-12 bg-black/40 rounded p-8">
+                            <div class="w-16 text-center">
+                                <div id="local-val" class="text-xs font-mono font-bold mb-2 text-red-500">-98%</div>
+                                <div class="w-10 h-32 bg-alzent-bg relative mx-auto"><div id="local-bar" class="absolute bottom-0 w-full bg-red-500" style="height: 2%;"></div></div>
+                                <span id="local-label" class="text-xs mt-2 block font-mono">ARS</span>
+                            </div>
+                            <div class="w-16 text-center">
+                                <div class="text-xs font-mono font-bold text-alzent-accent">STABLE</div>
+                                <div class="w-10 h-32 bg-alzent-bg relative mx-auto"><div class="absolute bottom-0 w-full bg-alzent-accent h-full"></div></div>
+                                <span class="text-xs mt-2 block font-mono">USD</span>
+                            </div>
+                        </div>
+                        <p id="graph-desc" class="text-sm text-alzent-subtext italic mt-8 leading-relaxed"></p>
+                    </div>
+                </div>
+                <div class="lg:col-span-3 space-y-6">
+                    <h3 class="text-white font-bold text-xs uppercase tracking-[0.2em] border-b border-alzent-border pb-4" data-i18n="reports_header">CURATED INSIGHTS</h3>
+                    <div class="premium-card p-8 rounded-xl news-card cursor-pointer group">
+                        <h4 class="text-2xl font-bold text-white mb-4 group-hover:text-alzent-accent">Yield Divergence 2026</h4>
+                        <p class="text-alzent-subtext leading-relaxed">Impact of interest rate pivots on capital flows in Latin America.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <footer class="bg-alzent-bg border-t border-alzent-border py-10 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 text-center text-alzent-subtext text-xs">
-            © 2026 ALZENT Digital. Todos los derechos reservados.
+    <!-- DETAILED SERVICE VIEWS -->
+    <div id="view-service-trading" class="view-section flex-grow pt-32 pb-24 max-w-7xl mx-auto px-4 lg:px-8">
+        <button onclick="navigateTo('institutional')" class="mb-10 text-alzent-subtext hover:text-white uppercase text-xs font-bold tracking-widest"><i class="fa-solid fa-arrow-left mr-2"></i> <span data-i18n="back_inst">Back</span></button>
+        <h1 class="text-5xl font-bold mb-10">MULTI-ASSET <span class="text-alzent-accent uppercase">Trading</span></h1>
+        <div class="grid lg:grid-cols-2 gap-16">
+            <p class="text-xl text-alzent-subtext leading-relaxed" data-i18n="trading_why_desc">Access a unified gateway for FX and Digital Assets. Execution at institutional scale via global liquidity pools.</p>
+            <div class="premium-card p-10 rounded-2xl shadow-2xl">
+                <form class="space-y-6">
+                    <input type="text" class="form-input" data-i18n-placeholder="lbl_inst_name" placeholder="Entity">
+                    <input type="email" class="form-input" data-i18n-placeholder="lbl_email" placeholder="Email">
+                    <button class="w-full bg-alzent-accent py-4 font-bold rounded" data-i18n="btn_submit">SUBMIT</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="view-service-tokenization" class="view-section flex-grow pt-32 pb-24 max-w-7xl mx-auto px-4 lg:px-8">
+        <button onclick="navigateTo('institutional')" class="mb-10 text-alzent-subtext hover:text-white uppercase text-xs font-bold tracking-widest"><i class="fa-solid fa-arrow-left mr-2"></i> <span data-i18n="back_inst">Back</span></button>
+        <h1 class="text-5xl font-bold mb-10">RWA <span class="text-alzent-accent uppercase">Tokenization</span></h1>
+        <p class="text-xl text-alzent-subtext leading-relaxed mb-10" data-i18n="token_why_desc">Digitalization of assets unlocks instant liquidity rails and fractional ownership for previously non-liquid sectors.</p>
+        <div class="premium-card p-10 rounded-2xl shadow-2xl max-w-xl">
+            <button class="w-full bg-alzent-accent py-4 font-bold rounded" data-i18n="btn_submit">REQUEST PROPOSAL</button>
+        </div>
+    </div>
+
+    <div id="view-service-treasury" class="view-section flex-grow pt-32 pb-24 max-w-7xl mx-auto px-4 lg:px-8">
+        <button onclick="navigateTo('institutional')" class="mb-10 text-alzent-subtext hover:text-white uppercase text-xs font-bold tracking-widest"><i class="fa-solid fa-arrow-left mr-2"></i> <span data-i18n="back_inst">Back</span></button>
+        <h1 class="text-5xl font-bold mb-10">TREASURY <span class="text-alzent-accent uppercase">Management</span></h1>
+        <p class="text-xl text-alzent-subtext leading-relaxed mb-10" data-i18n="treasury_why_desc">Optimize idle capital with strategic yield generation and multi-currency settlement solutions.</p>
+        <div class="premium-card p-10 rounded-2xl shadow-2xl max-w-xl">
+            <button class="w-full bg-alzent-accent py-4 font-bold rounded" data-i18n="btn_contact_sales">CONTACT SALES</button>
+        </div>
+    </div>
+
+    <div id="view-service-otc" class="view-section flex-grow pt-32 pb-24 max-w-7xl mx-auto px-4 lg:px-8">
+        <button onclick="navigateTo('institutional')" class="mb-10 text-alzent-subtext hover:text-white uppercase text-xs font-bold tracking-widest"><i class="fa-solid fa-arrow-left mr-2"></i> <span data-i18n="back_inst">Back</span></button>
+        <h1 class="text-5xl font-bold mb-10">OTC <span class="text-alzent-accent uppercase">DESK</span></h1>
+        <p class="text-xl text-alzent-subtext leading-relaxed mb-10" data-i18n="otc_why_desc">Deep block liquidity with zero slippage for institutional-scale asset conversion.</p>
+        <div class="premium-card p-10 rounded-2xl shadow-2xl max-w-xl">
+            <button class="w-full bg-alzent-accent py-4 font-bold rounded" data-i18n="btn_speak_trader">SPEAK TO A TRADER</button>
+        </div>
+    </div>
+
+    <footer class="bg-alzent-bg py-20 border-t border-alzent-border">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="flex items-center justify-center gap-3 mb-8">
+                <div class="h-10 w-10 bg-white rounded flex items-center justify-center text-alzent-bg font-extrabold text-xl font-sans tracking-tighter">AD</div>
+                <span class="text-2xl font-bold tracking-widest text-white">ALZENT</span>
+            </div>
+            <p class="text-alzent-subtext text-sm max-w-md mx-auto" data-i18n="footer_desc">Redefining financial infrastructure through heritage and technology.</p>
+            <div class="mt-12 pt-8 border-t border-white/5 w-full text-[10px] font-mono text-gray-600 tracking-widest uppercase">
+                &copy; 2025 ALZENT DIGITAL. ALL RIGHTS RESERVED.
+            </div>
         </div>
     </footer>
 
+    <!-- TRANSLATIONS & LOGIC -->
     <script>
-        // Sistema de navegación entre vistas
-        function navigateTo(viewId) {
-            // Ocultar todas las secciones
-            document.querySelectorAll('.view-section').forEach(section => {
-                section.classList.remove('active-view');
+        const translations = {
+            en: {
+                nav_why: "Why Alzent", nav_intel: "Intelligence", nav_cards: "Alzent Card", nav_wealth: "Wealth", nav_inst: "Institutional",
+                btn_login: "LOGIN", btn_signup: "GET THE CARD", hero_badge_title: "Global Reach", hero_badge_text: "Worldwide Shipping Now Available",
+                hero_title_1: "THE FUTURE OF", hero_title_2: "GLOBAL SPENDING.",
+                hero_desc: "The ALZENT Mastercard® series bridges the gap between your digital assets and the global economy. Secure, institutional-grade, and available in over 150 countries.",
+                btn_get_card: "CHOOSE YOUR CARD", btn_expertise: "INSTITUTIONAL ACCESS",
+                elite_badge: "ELITE METAL", card_tiers_title: "TWO TIERS. ONE GLOBAL STANDARD.", card_tiers_desc: "From everyday utility to elite wealth management, select the card that matches your financial ambition.",
+                tier_basic_label: "Standard PVC", tier_basic_title: "Alzent Basic", basic_feat_1: "Virtual & Physical PVC Card", basic_feat_2: "Standard Spending Limits", basic_feat_3: "0.5% Crypto Cashback", basic_feat_4: "Apple & Google Pay Ready", btn_get_basic: "ORDER BASIC",
+                tier_elite_label: "Elite Metal", tier_elite_title: "Alzent Metal", elite_feat_1: "Hand-Crafted 18g Stainless Steel", elite_feat_2: "Institutional Spending Limits", elite_feat_3: "Up to 2% Crypto Cashback", elite_feat_4: "Priority Support & Global Shipping", btn_get_elite: "ORDER METAL",
+                shipping_title: "GLOBAL AVAILABILITY. FAST SHIPPING.", shipping_desc: "We deliver the ALZENT Mastercard® to virtually every corner of the world. Our logistics network ensures your bridge to digital finance arrives at your door.",
+                why_title: "FINANCIAL HERITAGE. <br><span class=\"text-alzent-accent uppercase\">Tech Power.</span>",
+                why_desc: "Traditional finance is too slow; pure fintechs are too risky. ALZENT stands alone in the middle.",
+                why_c1_title: "Financial Heritage", why_c1_desc: "Leadership from top-tier financial institutions. We understand regulation and preservation.",
+                why_c2_title: "Tech Superiority", why_c2_desc: "Proprietary infrastructure ensures faster execution and setting global standards.",
+                why_c3_title: "Obsessive Service", why_c3_desc: "Dedicated relationship managers who understand your specific needs.",
+                wealth_title: "PRIVATE <span class=\"text-alzent-accent\">WEALTH</span>", wealth_desc: "We bring the rigor of private finance to the digital asset space. Tailored for HNWIs who demand safety, yield, and personalized attention.",
+                wealth_pt1_title: "High-Yield Accounts", wealth_pt1_desc: "Industry-leading returns on idle assets.",
+                wealth_pt2_title: "Collateralized Credit", wealth_pt2_desc: "Access liquidity without selling assets.",
+                wealth_pt3_title: "Dedicated Manager", wealth_pt3_desc: "24/7 priority support for your portfolio.",
+                inst_title: "INSTITUTIONAL SERVICES", srv_trading_title: "Multi-Asset Trading", srv_token_title: "RWA Tokenization", srv_treasury_title: "Treasury Management", srv_otc_title: "OTC Desk",
+                srv_trading_desc: "Institutional-grade execution for FX, Crypto, and CFDs.", srv_token_desc: "Unlock global liquidity by fractionalizing real-world assets.",
+                srv_treasury_desc: "Optimize corporate yield and instant global settlement rails.", srv_otc_desc: "Private, deep-liquidity block trading with zero slippage.",
+                btn_explore: "Explore", back_inst: "Back to Institutional", btn_submit: "SUBMIT", lbl_inst_name: "Entity Name", lbl_email: "Email", lbl_company: "Company Name",
+                trading_why_desc: "Access a unified gateway for FX and Digital Assets. Execution at institutional scale via global liquidity pools.",
+                token_why_desc: "Digitalization of assets unlocks instant liquidity rails and fractional ownership for previously non-liquid sectors.",
+                treasury_why_desc: "Optimize idle capital with strategic yield generation and multi-currency settlement solutions.",
+                otc_why_desc: "Deep block liquidity with zero slippage for institutional-scale asset conversion.",
+                btn_contact_sales: "CONTACT SALES", btn_speak_trader: "SPEAK TO A TRADER", form_trading_title: "Request Access", form_token_title: "Consultation", form_treasury_title: "Optimize", form_otc_title: "OTC Account",
+                intel_tag: "EDUCATION & INSIGHTS", intel_desc: "Weekly reports and economic analysis curated from global financial data. Protect your purchasing power.",
+                ph_email: "Enter your email", btn_get_reports: "GET REPORTS",
+                graph_title: "Currency Devaluation Tool", graph_subtitle: "Visualize 5-Year Devaluation vs USD",
+                reports_header: "CURATED INSIGHTS", footer_desc: "Redefining financial infrastructure through heritage and technology."
+            },
+            es: {
+                nav_why: "Por qué Alzent", nav_intel: "Inteligencia", nav_cards: "Tarjeta Alzent", nav_wealth: "Patrimonio", nav_inst: "Institucional",
+                btn_login: "ENTRAR", btn_signup: "PEDIR TARJETA", hero_badge_title: "Alcance Global", hero_badge_text: "Envío Mundial Disponible",
+                hero_title_1: "EL FUTURO DEL", hero_title_2: "GASTO GLOBAL.",
+                hero_desc: "La serie ALZENT Mastercard® une los activos digitales con la economía global. Disponible en más de 150 países.",
+                btn_get_card: "ELIJA SU TARJETA", btn_expertise: "ACCESO INSTITUCIONAL", elite_badge: "METAL ÉLITE",
+                card_tiers_title: "DOS NIVELES. UN ESTÁNDAR GLOBAL.", card_tiers_desc: "Desde utilidad diaria hasta gestión patrimonial de élite, seleccione la tarjeta que coincida con su ambición.",
+                tier_basic_title: "Alzent Basic", tier_elite_title: "Alzent Metal", basic_feat_1: "Tarjeta Virtual y Física PVC", basic_feat_2: "Límites de Gasto Estándar", basic_feat_3: "0.5% Cashback Cripto", basic_feat_4: "Apple y Google Pay", btn_get_basic: "PEDIR BÁSICA",
+                tier_elite_label: "Metal Élite", elite_feat_1: "Acero Inoxidable 18g", elite_feat_2: "Límites Institucionales", elite_feat_3: "Hasta 2% Cashback Cripto", elite_feat_4: "Soporte Prioritario y Envío Global", btn_get_elite: "PEDIR METAL",
+                shipping_title: "DISPONIBILIDAD GLOBAL. ENVÍO RÁPIDO.", shipping_desc: "Entregamos la ALZENT Mastercard® en prácticamente todos los rincones del mundo.",
+                why_title: "HERENCIA FINANCIERA. <br><span class=\"text-alzent-accent uppercase\">Poder Tech.</span>",
+                why_desc: "Las finanzas tradicionales son lentas; las fintech puras son riesgosas. ALZENT está en el centro.",
+                why_c1_title: "Herencia Financiera", why_c1_desc: "Liderazgo de instituciones de primer nivel. Entendemos regulación y preservación.",
+                why_c2_title: "Superioridad Tecnológica", why_c2_desc: "Infraestructura propietaria para ejecución más rápida y fiabilidad.",
+                why_c3_title: "Servicio Obsesivo", why_c3_desc: "Gerentes dedicados que entienden sus necesidades específicas.",
+                wealth_title: "PATRIMONIO <span class=\"text-alzent-accent\">PRIVADO</span>", wealth_desc: "Rigor financiero privado para el espacio de activos digitales.",
+                wealth_pt1_title: "Cuentas de Alto Rendimiento", wealth_pt1_desc: "Retornos líderes en la industria.",
+                wealth_pt2_title: "Crédito Colateralizado", wealth_pt2_desc: "Liquidez sin vender activos.",
+                wealth_pt3_title: "Gerente Dedicado", wealth_pt3_desc: "Soporte prioritario 24/7.",
+                inst_title: "SERVICIOS INSTITUCIONALES", srv_trading_title: "Trading Multi-Activo", srv_token_title: "Tokenización RWA", srv_treasury_title: "Gestión de Tesorería", srv_otc_title: "Mesa OTC",
+                srv_trading_desc: "Ejecución institucional para FX y Cripto.", srv_token_desc: "Desbloquee liquidez global fraccionando activos.", srv_treasury_desc: "Rendimiento y Liquidación Global.", srv_otc_desc: "Liquidez profunda en bloque.",
+                btn_explore: "Explorar", back_inst: "Volver a Institucional", btn_submit: "ENVIAR", lbl_inst_name: "Nombre Entidad", lbl_email: "Email", lbl_company: "Nombre Empresa",
+                trading_why_desc: "Acceda a una puerta unificada para FX y Activos Digitales. Ejecución a escala institucional.",
+                token_why_desc: "La digitalización de activos desbloquea rieles de liquidez instantánea.",
+                treasury_why_desc: "Optimice capital ocioso con generación estratégica de rendimiento.",
+                otc_why_desc: "Liquidez profunda en bloque con cero deslizamiento para conversión a gran escala.",
+                btn_contact_sales: "Ventas", btn_speak_trader: "Hablar con Trader", form_trading_title: "Solicitar Acceso", form_token_title: "Consulta", form_treasury_title: "Optimizar", form_otc_title: "Cuenta OTC",
+                intel_tag: "EDUCACIÓN E INSIGHTS", intel_desc: "Informes semanales y análisis económico curado de datos globales.",
+                ph_email: "Su email", btn_get_reports: "RECIBIR INFORMES",
+                graph_title: "Devaluación de Moneda", graph_subtitle: "5 años vs USD", reports_header: "INFORMES CURADOS", footer_desc: "Redefiniendo la infraestructura financiera."
+            },
+            pt: {
+                nav_why: "Por que Alzent", nav_intel: "Inteligência", nav_cards: "Cartão Alzent", nav_wealth: "Patrimônio", nav_inst: "Institucional",
+                btn_login: "LOGIN", btn_signup: "PEDIR CARTÃO", hero_badge_title: "Alcance Global", hero_badge_text: "Envio Mundial Disponível",
+                hero_title_1: "O FUTURO DOS", hero_title_2: "GASTOS GLOBAIS.",
+                hero_desc: "A série ALZENT Mastercard® liga os seus ativos digitais à economia global. Disponível em mais de 150 países.",
+                btn_get_card: "ESCOLHA SEU CARTÃO", btn_expertise: "ACESSO INSTITUCIONAL", elite_badge: "METAL ELITE",
+                card_tiers_title: "DOIS NÍVEIS. UM PADRÃO GLOBAL.", card_tiers_desc: "Da utilidade diária à gestão de patrimônio de elite.",
+                tier_basic_title: "Alzent Basic", tier_elite_title: "Alzent Metal", basic_feat_1: "Cartão Virtual e Físico PVC", basic_feat_2: "Limites Padrão", basic_feat_3: "0.5% Cashback Cripto", basic_feat_4: "Apple e Google Pay", btn_get_basic: "PEDIR BÁSICO",
+                tier_elite_label: "Metal Elite", elite_feat_1: "Aço Inoxidável 18g", elite_feat_2: "Limites Institucionais", elite_feat_3: "Até 2% Cashback Cripto", elite_feat_4: "Suporte Prioritário e Envio Global", btn_get_elite: "PEDIR METAL",
+                shipping_title: "DISPONIBILIDADE GLOBAL.", shipping_desc: "Entregamos o ALZENT Mastercard® em praticamente todos os cantos do mundo.",
+                why_title: "HERANÇA FINANCEIRA. <br><span class=\"text-alzent-accent uppercase\">Poder Tech.</span>",
+                why_desc: "Finanças tradicionais são lentas. ALZENT combina segurança com velocidade.",
+                why_c1_title: "Herança Financeira", why_c1_desc: "Liderança de instituições de topo. Regulação e preservação.",
+                why_c2_title: "Tecnologia Superior", why_c2_desc: "Infraestrutura proprietária para execução mais rápida.",
+                why_c3_title: "Serviço Obsessivo", why_c3_desc: "Gerentes dedicados para necessidades globais.",
+                wealth_title: "PATRIMÔNIO <span class=\"text-alzent-accent\">PRIVADO</span>", wealth_desc: "Rigor financeiro privado para ativos digitais.",
+                wealth_pt1_title: "Contas de Alto Rendimento", wealth_pt1_desc: "Retornos líderes na indústria.",
+                wealth_pt2_title: "Crédito Colateralizado", wealth_pt2_desc: "Liquidez sem vender ativos.",
+                wealth_pt3_title: "Gerente Dedicado", wealth_pt3_desc: "Suporte prioritário 24/7.",
+                inst_title: "SERVIÇOS INSTITUCIONAIS", srv_trading_title: "Trading Multi-Ativo", srv_token_title: "Tokenização RWA", srv_treasury_title: "Gestão de Tesouraria", srv_otc_title: "Mesa OTC",
+                srv_trading_desc: "Execução institucional para FX e Cripto.", srv_token_desc: "Desbloqueie liquidez global.", srv_treasury_desc: "Otimize rendimento corporativo.", srv_otc_desc: "Liquidez profunda em bloco.",
+                btn_explore: "Explorar", back_inst: "Voltar", btn_submit: "ENVIAR", lbl_inst_name: "Nome Entidade", lbl_email: "Email", lbl_company: "Nome Empresa",
+                trading_why_desc: "Acesso unificado para FX e Ativos Digitais.", token_why_desc: "Digitalização de ativos desbloqueia liquidez.",
+                treasury_why_desc: "Otimize capital ocioso com soluções de rendimento.", otc_why_desc: "Liquidez profunda com zero derrapagem.",
+                btn_contact_sales: "Vendas", btn_speak_trader: "Falar com Trader", form_trading_title: "Solicitar Acesso", form_token_title: "Consulta", form_treasury_title: "Otimizar", form_otc_title: "Conta OTC",
+                intel_tag: "EDUCAÇÃO E INSIGHTS", intel_desc: "Relatórios semanais e análise econômica.",
+                ph_email: "Seu email", btn_get_reports: "RECEBER RELATÓRIOS",
+                graph_title: "Poder de Compra", graph_subtitle: "5 Anos vs USD", reports_header: "RELATÓRIOS", footer_desc: "Redefinindo a infraestrutura financeira."
+            },
+            it: {
+                nav_why: "Perché Alzent", nav_intel: "Intelligence", nav_cards: "Carta Alzent", nav_wealth: "Patrimonio", nav_inst: "Istituzionale",
+                btn_login: "ACCEDI", btn_signup: "OTTIENI CARTA", hero_badge_title: "Portata Globale", hero_badge_text: "Spedizione Mondiale",
+                hero_title_1: "IL FUTURO DELLA", hero_title_2: "SPESA GLOBALE.",
+                hero_desc: "La serie ALZENT Mastercard® collega i tuoi asset digitali all'economia globale. Disponibile in oltre 150 paesi.",
+                btn_get_card: "SCEGLI LA TUA CARTA", btn_expertise: "ACCESSO ISTITUZIONALE", elite_badge: "METAL ELITE",
+                card_tiers_title: "DUE LIVELLI. UNO STANDARD GLOBALE.", card_tiers_desc: "Dall'utilità quotidiana alla gestione patrimoniale d'élite.",
+                tier_basic_title: "Alzent Basic", tier_elite_title: "Alzent Metal", basic_feat_1: "Carta Virtuale e Fisica PVC", basic_feat_2: "Limiti di Spesa Standard", basic_feat_3: "0.5% Cashback Cripto", basic_feat_4: "Apple e Google Pay", btn_get_basic: "ORDINA BASE",
+                tier_elite_label: "Metal Elite", elite_feat_1: "Acciaio Inox 18g", elite_feat_2: "Limiti Istituzionali", elite_feat_3: "Fino al 2% Cashback Cripto", elite_feat_4: "Supporto Prioritario e Spedizione", btn_get_elite: "ORDINA METAL",
+                shipping_title: "DISPONIBILITÀ GLOBALE.", shipping_desc: "Consegniamo la ALZENT Mastercard® in quasi ogni angolo del mondo.",
+                why_title: "EREDITÀ FINANZIARIA. <br><span class=\"text-alzent-accent uppercase\">Potere Tech.</span>",
+                why_desc: "La finanza tradizionale è lenta. ALZENT combina sicurezza e velocità.",
+                why_c1_title: "Eredità Finanziaria", why_c1_desc: "Leadership da istituzioni top. Regolazione e preservazione.",
+                why_c2_title: "Superiorità Tech", why_c2_desc: "Infrastruttura proprietaria per esecuzione rapida.",
+                why_c3_title: "Servizio Ossessivo", why_c3_desc: "Manager dedicati per esigenze globali.",
+                wealth_title: "PATRIMONIO <span class=\"text-alzent-accent\">PRIVATO</span>", wealth_desc: "Rigore finanziario privato per asset digitali.",
+                wealth_pt1_title: "Conti ad Alto Rendimento", wealth_pt1_desc: "Ritorni leader nel settore.",
+                wealth_pt2_title: "Credito Collateralizzato", wealth_pt2_desc: "Liquidità senza vendere asset.",
+                wealth_pt3_title: "Manager Dedicato", wealth_pt3_desc: "Supporto prioritario 24/7.",
+                inst_title: "SERVIZI ISTITUZIONALI", srv_trading_title: "Trading Multi-Asset", srv_token_title: "Tokenizzazione RWA", srv_treasury_title: "Gestione Tesoreria", srv_otc_title: "Desk OTC",
+                srv_trading_desc: "Esecuzione istituzionale per FX e Cripto.", srv_token_desc: "Sblocca liquidità globale.", srv_treasury_desc: "Ottimizza rendimento corporate.", srv_otc_desc: "Liquidità profonda in blocco.",
+                btn_explore: "Esplora", back_inst: "Indietro", btn_submit: "INVIA", lbl_inst_name: "Nome Ente", lbl_email: "Email", lbl_company: "Nome Azienda",
+                trading_why_desc: "Accesso unificato per FX e Asset Digitali.", token_why_desc: "La digitalizzazione sblocca liquidità istantanea.",
+                treasury_why_desc: "Ottimizza capitale inattivo con soluzioni di rendimento.", otc_why_desc: "Liquidità profonda con zero slippage.",
+                btn_contact_sales: "Vendite", btn_speak_trader: "Parla con Trader", form_trading_title: "Richiedi Accesso", form_token_title: "Consulenza", form_treasury_title: "Ottimizza", form_otc_title: "Conto OTC",
+                intel_tag: "ISTRUZIONE E INSIGHT", intel_desc: "Report settimanali e analisi economica.",
+                ph_email: "Tua email", btn_get_reports: "RICEVI REPORT",
+                graph_title: "Svalutazione Valutaria", graph_subtitle: "5 Anni vs USD", reports_header: "REPORT CURATI", footer_desc: "Ridefinire l'infrastruttura finanziaria."
+            },
+            ru: {
+                nav_why: "Почему Alzent", nav_intel: "Интеллект", nav_cards: "Карта Alzent", nav_wealth: "Капитал", nav_inst: "Институты",
+                btn_login: "ВХОД", btn_signup: "ПОЛУЧИТЬ КАРТУ", hero_badge_title: "Глобальный охват", hero_badge_text: "Доставка по всему миру",
+                hero_title_1: "БУДУЩЕЕ", hero_title_2: "МИРОВЫХ ТРАТ.",
+                hero_desc: "Серия ALZENT Mastercard® соединяет цифровые активы с мировой экономикой. Доступно в более чем 150 странах.",
+                btn_get_card: "ВЫБРАТЬ КАРТУ", btn_expertise: "ИНСТИТУЦИОНАЛЬНЫЙ ДОСТУП", elite_badge: "ЭЛИТНЫЙ МЕТАЛЛ",
+                card_tiers_title: "ДВА УРОВНЯ. ОДИН СТАНДАРТ.", card_tiers_desc: "От повседневного использования до элитного управления капиталом.",
+                tier_basic_title: "Alzent Basic", tier_elite_title: "Alzent Metal", basic_feat_1: "Виртуальная и ПВХ карта", basic_feat_2: "Стандартные лимиты", basic_feat_3: "0.5% Крипто-кэшбэк", basic_feat_4: "Apple и Google Pay", btn_get_basic: "ЗАКАЗАТЬ BASIC",
+                tier_elite_label: "Элитный Металл", elite_feat_1: "Нержавеющая сталь 18г", elite_feat_2: "Институциональные лимиты", elite_feat_3: "До 2% Крипто-кэшбэка", elite_feat_4: "Приоритетная поддержка и доставка", btn_get_elite: "ЗАКАЗАТЬ METAL",
+                shipping_title: "ГЛОБАЛЬНАЯ ДОСТАВКА.", shipping_desc: "Мы доставляем карту ALZENT Mastercard® практически в любую точку мира.",
+                why_title: "ФИНАНСОВОЕ НАСЛЕДИЕ. <br><span class=\"text-alzent-accent uppercase\">Технологии.</span>",
+                why_desc: "Традиционные финансы медленны. ALZENT объединяет безопасность и скорость.",
+                why_c1_title: "Финансовое Наследие", why_c1_desc: "Лидерство от топовых институтов. Регулирование и сохранение.",
+                why_c2_title: "Технологическое Превосходство", why_c2_desc: "Собственная инфраструктура для быстрого исполнения.",
+                why_c3_title: "Исключительный Сервис", why_c3_desc: "Выделенные менеджеры для глобальных клиентов.",
+                wealth_title: "ЧАСТНЫЙ <span class=\"text-alzent-accent\">КАПИТАЛ</span>", wealth_desc: "Финансовая строгость для цифровых активов.",
+                wealth_pt1_title: "Высокодоходные Счета", wealth_pt1_desc: "Лидирующая доходность на активы.",
+                wealth_pt2_title: "Кредитование под Залог", wealth_pt2_desc: "Ликвидность без продажи активов.",
+                wealth_pt3_title: "Персональный Менеджер", wealth_pt3_desc: "Приоритетная поддержка 24/7.",
+                inst_title: "ИНСТИТУЦИОНАЛЬНЫЕ УСЛУГИ", srv_trading_title: "Мульти-активный Трейдинг", srv_token_title: "Токенизация RWA", srv_treasury_title: "Управление Казначейством", srv_otc_title: "OTC Деск",
+                srv_trading_desc: "Институциональное исполнение для FX и Крипто.", srv_token_desc: "Разблокируйте глобальную ликвидность.", srv_treasury_desc: "Оптимизация корпоративной доходности.", srv_otc_desc: "Глубокая ликвидность блоками.",
+                btn_explore: "Подробнее", back_inst: "Назад", btn_submit: "ОТПРАВИТЬ", lbl_inst_name: "Название Организации", lbl_email: "Email", lbl_company: "Название Компании",
+                trading_why_desc: "Единый шлюз для FX и Цифровых Активов.", token_why_desc: "Цифровизация активов открывает мгновенную ликвидность.",
+                treasury_why_desc: "Оптимизация свободного капитала.", otc_why_desc: "Глубокая ликвидность с нулевым проскальзыванием.",
+                btn_contact_sales: "Связаться", btn_speak_trader: "Говорить с Трейдером", form_trading_title: "Запрос Доступа", form_token_title: "Консультация", form_treasury_title: "Оптимизация", form_otc_title: "OTC Счет",
+                intel_tag: "ОБРАЗОВАНИЕ И ИНСАЙТЫ", intel_desc: "Еженедельные отчеты и экономический анализ.",
+                ph_email: "Ваш email", btn_get_reports: "ПОЛУЧИТЬ ОТЧЕТЫ",
+                graph_title: "Девальвация валют", graph_subtitle: "5 лет против USD", reports_header: "ОТЧЕТЫ", footer_desc: "Переосмысление финансовой инфраструктуры."
+            },
+            zh: {
+                nav_why: "为何选择 Alzent", nav_intel: "情报中心", nav_cards: "Alzent 银行卡", nav_wealth: "财富管理", nav_inst: "机构服务",
+                btn_login: "登录", btn_signup: "获取卡片", hero_badge_title: "全球覆盖", hero_badge_text: "全球发货",
+                hero_title_1: "全球支付的", hero_title_2: "未来。",
+                hero_desc: "ALZENT Mastercard® 系列将您的数字资产与全球经济联系起来。安全、机构级，覆盖 150 多个国家。",
+                btn_get_card: "选择卡片", btn_expertise: "机构访问", elite_badge: "精英金属卡",
+                card_tiers_title: "两个等级。一个全球标准。", card_tiers_desc: "从日常使用到精英财富管理，选择符合您雄心的卡片。",
+                tier_basic_title: "Alzent 基础版", tier_elite_title: "Alzent 金属版", basic_feat_1: "虚拟和实体 PVC 卡", basic_feat_2: "标准消费限额", basic_feat_3: "0.5% 加密返现", basic_feat_4: "支持 Apple 和 Google Pay", btn_get_basic: "订购基础版",
+                tier_elite_label: "精英金属", elite_feat_1: "手工制作 18g 不锈钢", elite_feat_2: "机构消费限额", elite_feat_3: "最高 2% 加密返现", elite_feat_4: "优先支持和全球发货", btn_get_elite: "订购金属版",
+                shipping_title: "全球可用。快速发货。", shipping_desc: "我们将 ALZENT Mastercard® 送达世界几乎每个角落。",
+                why_title: "金融传承。<br><span class=\"text-alzent-accent uppercase\">科技力量。</span>",
+                why_desc: "传统金融太慢；纯金融科技太冒险。ALZENT 结合了安全与速度。",
+                why_c1_title: "金融传承", why_c1_desc: "来自顶级机构的领导力。我们懂得监管和保值。",
+                why_c2_title: "技术优势", why_c2_desc: "专有基础设施确保更快的执行。",
+                why_c3_title: "极致服务", why_c3_desc: "了解全球客户特定需求的专属经理。",
+                wealth_title: "私人 <span class=\"text-alzent-accent\">财富</span>", wealth_desc: "将私人金融的严谨带入数字资产领域。",
+                wealth_pt1_title: "高收益账户", wealth_pt1_desc: "行业领先的闲置资产回报。",
+                wealth_pt2_title: "抵押信贷", wealth_pt2_desc: "无需出售资产即可获得流动性。",
+                wealth_pt3_title: "专属经理", wealth_pt3_desc: "24/7 优先投资组合支持。",
+                inst_title: "机构服务", srv_trading_title: "多资产交易", srv_token_title: "RWA 代币化", srv_treasury_title: "资金管理", srv_otc_title: "OTC 柜台",
+                srv_trading_desc: "外汇和加密货币的机构级执行。", srv_token_desc: "解锁全球流动性。", srv_treasury_desc: "优化企业收益。", srv_otc_desc: "深层大宗流动性。",
+                btn_explore: "探索", back_inst: "返回机构服务", btn_submit: "提交", lbl_inst_name: "机构名称", lbl_email: "邮箱", lbl_company: "公司名称",
+                trading_why_desc: "访问外汇和数字资产的统一网关。", token_why_desc: "资产数字化解锁即时流动性。",
+                treasury_why_desc: "通过战略收益解决方案优化闲置资本。", otc_why_desc: "零滑点的深层大宗流动性。",
+                btn_contact_sales: "联系销售", btn_speak_trader: "联系交易员", form_trading_title: "申请访问", form_token_title: "咨询", form_treasury_title: "优化", form_otc_title: "OTC 账户",
+                intel_tag: "教育与洞察", intel_desc: "每周报告和经济分析。",
+                ph_email: "您的邮箱", btn_get_reports: "获取报告",
+                graph_title: "货币贬值", graph_subtitle: "5年对比美元", reports_header: "精选报告", footer_desc: "重塑金融基础设施。"
+            }
+        };
+
+        let currentLang = 'en';
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) el.innerHTML = translations[lang][key];
             });
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (translations[lang] && translations[lang][key]) el.placeholder = translations[lang][key];
+            });
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active-lang'));
+            const btn = document.getElementById(lang-${lang});
+            if(btn) btn.classList.add('active-lang');
+            const activeCurrencyBtn = document.querySelector('.currency-btn.bg-alzent-card');
+            if(activeCurrencyBtn) updateGraph(activeCurrencyBtn.dataset.currency);
+        }
+
+        const allViewIds = ['view-home', 'view-intelligence', 'view-service-trading', 'view-service-tokenization', 'view-service-treasury', 'view-service-otc'];
+
+        function navigateTo(target) {
+            allViewIds.forEach(id => { const el = document.getElementById(id); if(el) el.classList.remove('active-view'); });
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active-nav'));
             
-            // Mostrar la sección destino
-            const targetView = document.getElementById('view-' + viewId);
-            if (targetView) {
-                targetView.classList.add('active-view');
+            if (target === 'intelligence') {
+                document.getElementById('view-intelligence').classList.add('active-view');
+                document.getElementById('nav-intelligence').classList.add('active-nav');
+                window.scrollTo(0,0);
+            } else if (allViewIds.includes(view-${target})) {
+                document.getElementById(view-${target}).classList.add('active-view');
+                window.scrollTo(0,0);
+            } else if (target === 'wealth') {
+                document.getElementById('view-home').classList.add('active-view');
+                setTimeout(() => document.getElementById('wealth').scrollIntoView({ behavior: 'smooth' }), 50);
+            } else if (target === 'card') {
+                document.getElementById('view-home').classList.add('active-view');
+                setTimeout(() => document.getElementById('card').scrollIntoView({ behavior: 'smooth' }), 50);
+            } else {
+                document.getElementById('view-home').classList.add('active-view');
+                if (target !== 'home') {
+                    const section = document.getElementById(target);
+                    if (section) setTimeout(() => section.scrollIntoView({ behavior: 'smooth' }), 50);
+                } else { window.scrollTo(0,0); }
             }
             
-            // Cerrar menú móvil si estuviera abierto
             const mobileMenu = document.getElementById('mobile-menu');
             if(mobileMenu) mobileMenu.classList.add('hidden');
-            
-            // Scroll al inicio
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Cambio de idioma (Estructura básica)
-        function changeLanguage(lang) {
-            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active-lang'));
-            document.getElementById('lang-' + lang).classList.add('active-lang');
-            
-            // Aquí podrías implementar un objeto JSON con las traducciones
-            console.log("Idioma cambiado a: " + lang);
+        const graphData = {
+            'ARS': { val: '-98%', height: '2%', color: '#ef4444', desc: { en: "Argentine Peso catastrophic devaluation.", es: "Devaluación catastrófica del Peso Argentino.", pt: "Desvalorização catastrófica do Peso Argentino.", it: "Svalutazione catastrofica del Peso Argentino.", ru: "Катастрофическая девальвация песо.", zh: "阿根廷比索灾难性贬值。" } },
+            'COP': { val: '-32%', height: '68%', color: '#eab308', desc: { en: "High regional volatility for COP.", es: "Alta volatilidad regional para el COP.", pt: "Alta volatilidade regional para o COP.", it: "Alta volatilità regionale per il COP.", ru: "Высокая волатильность колумбийского песо.", zh: "哥伦比亚比索的高波动性。" } },
+            'BRL': { val: '-35%', height: '65%', color: '#22c55e', desc: { en: "Continued pressure on Brazilian Real.", es: "Presión continua sobre el Real Brasileño.", pt: "Pressão contínua sobre o Real Brasileiro.", it: "Continua pressione sul Real Brasiliano.", ru: "Давление на бразильский реал.", zh: "巴西雷亚尔面临持续压力。" } }
+        };
+
+        function updateGraph(currency) {
+            const data = graphData[currency];
+            const valEl = document.getElementById('local-val');
+            valEl.innerText = data.val; valEl.style.color = data.color;
+            document.getElementById('local-label').innerText = currency;
+            document.getElementById('graph-desc').innerText = "${data.desc[currentLang] || data.desc['en']}";
+            document.getElementById('local-bar').style.height = data.height;
+            document.getElementById('local-bar').style.backgroundColor = data.color;
+            document.querySelectorAll('.currency-btn').forEach(btn => {
+                if(btn.dataset.currency === currency) btn.classList.add('bg-alzent-card', 'text-white');
+                else btn.classList.remove('bg-alzent-card', 'text-white');
+            });
         }
-    </script>
-</body>
-<script>
-let currentLang = 'en';
 
-function changeLanguage(lang) {
-    currentLang = lang;
-
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (translations[lang] && translations[lang][key]) {
-            el.innerHTML = translations[lang][key];
-        }
-    });
-
-    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-        const key = el.getAttribute('data-i18n-placeholder');
-        if (translations[lang] && translations[lang][key]) {
-            el.placeholder = translations[lang][key];
-        }
-    });
-
-    document.querySelectorAll('.lang-btn').forEach(btn =>
-        btn.classList.remove('active-lang')
-    );
-
-    const btn = document.getElementById(`lang-${lang}`);
-    if (btn) btn.classList.add('active-lang');
-}
-
-const allViewIds = [
-    'view-home',
-    'view-intelligence',
-    'view-service-trading',
-    'view-service-tokenization',
-    'view-service-treasury',
-    'view-service-otc'
-];
-
-function navigateTo(target) {
-    allViewIds.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.classList.remove('active-view');
-    });
-
-    document.querySelectorAll('.nav-link')
-        .forEach(l => l.classList.remove('active-nav'));
-
-    if (target === 'intelligence') {
-        document.getElementById('view-intelligence')?.classList.add('active-view');
-        document.getElementById('nav-intelligence')?.classList.add('active-nav');
-        window.scrollTo(0, 0);
-        return;
-    }
-
-    if (allViewIds.includes(`view-${target}`)) {
-        document.getElementById(`view-${target}`)?.classList.add('active-view');
-        window.scrollTo(0, 0);
-        return;
-    }
-
-    document.getElementById('view-home')?.classList.add('active-view');
-
-    if (target !== 'home') {
-        const section = document.getElementById(target);
-        if (section) {
-            setTimeout(() => {
-                section.scrollIntoView({ behavior: 'smooth' });
-            }, 50);
-        }
-    } else {
-        window.scrollTo(0, 0);
-    }
-}
-</script>
-</html>
+        window.onload = () => { changeLanguage('en'); updateGraph('ARS'); };
+        window.addEventListener(
