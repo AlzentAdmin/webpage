@@ -41,7 +41,13 @@ const CONFIG = {
     defaultLang: 'en',
     
     // Supported languages
-    supportedLangs: ['en', 'es', 'pt', 'it', 'ru', 'zh']
+    supportedLangs: ['en', 'es', 'pt', 'it', 'ru', 'zh'],
+    
+    // Email service configuration
+    // Azure Function URL - Update this when Azure Function is deployed
+    // For local development: 'http://localhost:7071/api/sendemail'
+    // For production: 'https://alzent-email-4413.azurewebsites.net/api/sendemail'
+    emailServiceUrl: window.EMAIL_SERVICE_URL || 'https://alzent-email-4413.azurewebsites.net/api/sendemail'
 };
 
 // Make CONFIG available globally

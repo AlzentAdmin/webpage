@@ -1,9 +1,9 @@
 const { app } = require('@azure/functions');
 const { Client } = require('@microsoft/microsoft-graph-client');
-const { ClientCredentialProvider } = require('@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials');
 const { ClientSecretCredential } = require('@azure/identity');
 const path = require('path');
 const fs = require('fs');
+const https = require('https');
 
 // Load environment variables
 require('dotenv').config();
@@ -53,6 +53,55 @@ const SUBJECT_TRANSLATIONS = {
 };
 
 /**
+ * Get access token directly from Microsoft Identity Platform
+ */
+async function getAccessToken() {
+    if (!TENANT_ID || !CLIENT_ID || !CLIENT_SECRET) {
+        throw new Error('Microsoft 365 credentials not configured.');
+    }
+
+    const tokenEndpoint = `https://login.microsoftonline.com/${TENANT_ID}/oauth2/v2.0/token`;
+    const params = new URLSearchParams({
+        client_id: CLIENT_ID,
+        client_secret: CLIENT_SECRET,
+        scope: 'https://graph.microsoft.com/.default',
+        grant_type: 'client_credentials'
+    });
+
+    return new Promise((resolve, reject) => {
+        const req = https.request(tokenEndpoint, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Content-Length': params.toString().length
+            }
+        }, (res) => {
+            let data = '';
+            res.on('data', (chunk) => { data += chunk; });
+            res.on('end', () => {
+                try {
+                    const json = JSON.parse(data);
+                    if (json.access_token) {
+                        resolve(json.access_token);
+                    } else {
+                        reject(new Error(`Token request failed: ${json.error_description || json.error || 'Unknown error'}`));
+                    }
+                } catch (error) {
+                    reject(new Error(`Failed to parse token response: ${error.message}`));
+                }
+            });
+        });
+
+        req.on('error', (error) => {
+            reject(new Error(`Token request error: ${error.message}`));
+        });
+
+        req.write(params.toString());
+        req.end();
+    });
+}
+
+/**
  * Initialize Microsoft Graph client
  */
 function getGraphClient() {
@@ -60,10 +109,17 @@ function getGraphClient() {
         throw new Error('Microsoft 365 credentials not configured. Please set MICROSOFT_TENANT_ID, MICROSOFT_CLIENT_ID, and MICROSOFT_CLIENT_SECRET environment variables.');
     }
 
-    const credential = new ClientSecretCredential(TENANT_ID, CLIENT_ID, CLIENT_SECRET);
-    const authProvider = new ClientCredentialProvider(credential, {
-        scopes: ['https://graph.microsoft.com/.default']
-    });
+    // Create auth provider using direct token fetch
+    const authProvider = {
+        getAccessToken: async () => {
+            try {
+                return await getAccessToken();
+            } catch (error) {
+                console.error('Error getting access token:', error);
+                throw error;
+            }
+        }
+    };
 
     return Client.initWithMiddleware({ authProvider });
 }
@@ -191,7 +247,7 @@ function validateFormData(data) {
  */
 app.http('sendEmail', {
     methods: ['POST', 'OPTIONS'],
-    authLevel: 'function',
+    authLevel: 'anonymous',
     handler: async (request, context) => {
         // Handle CORS preflight
         if (request.method === 'OPTIONS') {

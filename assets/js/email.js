@@ -2,12 +2,13 @@
 
 /**
  * Configuration for email service
- * TODO: Update AZURE_FUNCTION_URL when backend is deployed
+ * Gets endpoint URL from CONFIG or window.EMAIL_SERVICE_URL
  */
 const EMAIL_CONFIG = {
-    // Azure Function URL - Update this when backend is deployed
-    // For now, using a placeholder that can be configured
-    endpoint: window.EMAIL_SERVICE_URL || 'https://your-function-app.azurewebsites.net/api/send-email',
+    // Azure Function URL - Gets from CONFIG.emailServiceUrl or window.EMAIL_SERVICE_URL
+    // Can be set via: window.EMAIL_SERVICE_URL = 'https://your-function-app.azurewebsites.net/api/send-email'
+    // Or configured in config.js
+    endpoint: (window.CONFIG && window.CONFIG.emailServiceUrl) || window.EMAIL_SERVICE_URL || 'https://your-function-app.azurewebsites.net/api/send-email',
     timeout: 30000, // 30 seconds
     retryAttempts: 1, // Maximum retry attempts
     retryDelay: 2000, // Delay between retries (ms)
