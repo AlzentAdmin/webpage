@@ -1,0 +1,140 @@
+{
+  "nav": {
+    "why": "Why Alzent",
+    "intel": "Intelligence",
+    "cards": "Alzent Card",
+    "wealth": "Wealth",
+    "inst": "Institutional"
+  },
+  "buttons": {
+    "login": "LOGIN",
+    "signup": "GET THE CARD",
+    "get_card": "CHOOSE YOUR CARD",
+    "expertise": "INSTITUTIONAL ACCESS",
+    "get_basic": "ORDER BASIC",
+    "get_elite": "ORDER METAL",
+    "explore": "Explore",
+    "back_inst": "Back to Institutional",
+    "submit": "SUBMIT",
+    "contact_sales": "CONTACT SALES",
+    "speak_trader": "SPEAK TO A TRADER",
+    "get_reports": "GET REPORTS"
+  },
+  "hero": {
+    "badge_title": "Global Reach",
+    "badge_text": "Worldwide Shipping Now Available",
+    "title_1": "THE FUTURE OF",
+    "title_2": "GLOBAL SPENDING.",
+    "desc": "The ALZENT Mastercard® series bridges the gap between your digital assets and the global economy. Secure, institutional-grade, and available in over 150 countries.",
+    "elite_badge": "ELITE METAL"
+  },
+  "cards": {
+    "tiers_title": "TWO TIERS. ONE GLOBAL STANDARD.",
+    "tiers_desc": "From everyday utility to elite wealth management, select the card that matches your financial ambition.",
+    "basic": {
+      "label": "Standard PVC",
+      "title": "Alzent Basic",
+      "feat_1": "Virtual & Physical PVC Card",
+      "feat_2": "Standard Spending Limits",
+      "feat_3": "0.5% Crypto Cashback",
+      "feat_4": "Apple & Google Pay Ready"
+    },
+    "elite": {
+      "label": "Elite Metal",
+      "title": "Alzent Metal",
+      "feat_1": "Hand-Crafted 18g Stainless Steel",
+      "feat_2": "Institutional Spending Limits",
+      "feat_3": "Up to 2% Crypto Cashback",
+      "feat_4": "Priority Support & Global Shipping"
+    }
+  },
+  "shipping": {
+    "title": "GLOBAL AVAILABILITY. FAST SHIPPING.",
+    "desc": "We deliver the ALZENT Mastercard® to virtually every corner of the world. Our logistics network ensures your bridge to digital finance arrives at your door."
+  },
+  "why": {
+    "title": "FINANCIAL HERITAGE. <br><span class=\"text-alzent-accent uppercase\">Tech Power.</span>",
+    "desc": "Traditional finance is too slow; pure fintechs are too risky. ALZENT stands alone in the middle.",
+    "c1_title": "Financial Heritage",
+    "c1_desc": "Leadership from top-tier financial institutions. We understand regulation and preservation.",
+    "c2_title": "Tech Superiority",
+    "c2_desc": "Proprietary infrastructure ensures faster execution and setting global standards.",
+    "c3_title": "Obsessive Service",
+    "c3_desc": "Dedicated relationship managers who understand your specific needs."
+  },
+  "wealth": {
+    "title": "PRIVATE <span class=\"text-alzent-accent\">WEALTH</span>",
+    "desc": "We bring the rigor of private finance to the digital asset space. Tailored for HNWIs who demand safety, yield, and personalized attention.",
+    "pt1_title": "High-Yield Accounts",
+    "pt1_desc": "Industry-leading returns on idle assets.",
+    "pt2_title": "Collateralized Credit",
+    "pt2_desc": "Access liquidity without selling assets.",
+    "pt3_title": "Dedicated Manager",
+    "pt3_desc": "24/7 priority support for your portfolio."
+  },
+  "institutional": {
+    "title": "INSTITUTIONAL SERVICES",
+    "trading": {
+      "title": "Multi-Asset Trading",
+      "desc": "Institutional-grade execution for FX, Crypto, and CFDs.",
+      "why_desc": "Access a unified gateway for FX and Digital Assets. Execution at institutional scale via global liquidity pools."
+    },
+    "tokenization": {
+      "title": "RWA Tokenization",
+      "desc": "Unlock global liquidity by fractionalizing real-world assets.",
+      "why_desc": "Digitalization of assets unlocks instant liquidity rails and fractional ownership for previously non-liquid sectors."
+    },
+    "treasury": {
+      "title": "Treasury Management",
+      "desc": "Optimize corporate yield and instant global settlement rails.",
+      "why_desc": "Optimize idle capital with strategic yield generation and multi-currency settlement solutions."
+    },
+    "otc": {
+      "title": "OTC Desk",
+      "desc": "Private, deep-liquidity block trading with zero slippage.",
+      "why_desc": "Deep block liquidity with zero slippage for institutional-scale asset conversion."
+    }
+  },
+  "forms": {
+    "inst_name": "Entity Name",
+    "email": "Email",
+    "company": "Company Name",
+    "ph_email": "Enter your email"
+  },
+  "intelligence": {
+    "tag": "EDUCATION & INSIGHTS",
+    "desc": "Weekly reports and economic analysis curated from global financial data. Protect your purchasing power.",
+    "graph_title": "Currency Devaluation Tool",
+    "graph_subtitle": "Visualize 5-Year Devaluation vs USD",
+    "reports_header": "CURATED INSIGHTS"
+  },
+  "footer": {
+    "desc": "Redefining financial infrastructure through heritage and technology."
+  },
+  "card_form": {
+    "title_get": "GET THE CARD",
+    "subtitle_all": "Alzent Basic or Alzent Metal",
+    "subtitle_basic": "Alzent Basic",
+    "subtitle_metal": "Alzent Metal",
+    "fields": {
+      "applicant_name": "Applicant Name",
+      "email": "Email",
+      "amount": "Amount to Request (USD)"
+    },
+    "placeholders": {
+      "applicant_name": "Enter your full name",
+      "email": "Enter your email",
+      "amount": "Enter amount in USD"
+    },
+    "errors": {
+      "required": "This field is required",
+      "invalid_email": "Please enter a valid email",
+      "invalid_amount": "Please enter a valid amount",
+      "min_amount": "Minimum amount is $1",
+      "max_amount": "Maximum amount is $1,000,000"
+    },
+    "submit": "SUBMIT REQUEST",
+    "success": "Request submitted successfully! We'll contact you soon.",
+    "close": "Close"
+  }
+}
