@@ -217,7 +217,8 @@ function initSecureForm(form) {
         // Remove honeypot from data
         delete data.website;
         
-        console.log('Form data (sanitized):', data);
+        // Debug logging (disabled for production)
+        // console.log('Form data (sanitized):', data);
         
         // Simulate API call
         setTimeout(() => {
