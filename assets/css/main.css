@@ -1,0 +1,17 @@
+/* Main CSS - Base styles and variables */
+:root {
+    --alzent-bg: #0B0F15;
+    --alzent-card: #121721;
+    --alzent-accent: #2563EB;
+    --alzent-secondary: #64748B;
+    --alzent-text: #F8FAFC;
+    --alzent-subtext: #94A3B8;
+    --alzent-border: #1E293B;
+}
+
+body {
+    background-color: var(--alzent-bg);
+    color: var(--alzent-text);
+    overflow-x: hidden;
+}
+
