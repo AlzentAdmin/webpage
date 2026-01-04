@@ -71,24 +71,36 @@
     <!-- Define openCardModal immediately to ensure it's available -->
     <script>
         // Define modal functions immediately (before any other scripts)
-        function openCardModal() {
-            console.log('openCardModal called');
+        // This is a temporary placeholder that will be replaced by main.js
+        function openCardModal(variant) {
             const modal = document.getElementById('card-request-modal');
-            console.log('Modal element:', modal);
             if (modal) {
-                // Remove hidden class and ensure flex is present
                 modal.classList.remove('hidden');
                 modal.classList.add('flex');
-                // Force display with inline style to override any CSS conflicts
                 modal.style.display = 'flex';
                 modal.style.zIndex = '100';
                 modal.style.opacity = '1';
                 modal.style.visibility = 'visible';
                 document.body.style.overflow = 'hidden';
-                console.log('Modal opened successfully');
-                console.log('Modal classes:', modal.className);
-                console.log('Modal display style:', modal.style.display);
-                console.log('Modal z-index:', modal.style.zIndex);
+                
+                // Update modal text if variant is provided and function is available
+                // Will be updated by main.js when it loads
+                if (variant && typeof window.updateCardModalText === 'function') {
+                    window.updateCardModalText(variant);
+                } else if (variant) {
+                    // Fallback: update text directly if function not available yet
+                    const titleEl = document.getElementById('modal-title');
+                    const subtitleEl = document.getElementById('modal-subtitle');
+                    if (subtitleEl) {
+                        if (variant === 'basic') {
+                            subtitleEl.textContent = 'Alzent Basic';
+                        } else if (variant === 'metal') {
+                            subtitleEl.textContent = 'Alzent Metal';
+                        } else {
+                            subtitleEl.textContent = 'Alzent Basic or Alzent Metal';
+                        }
+                    }
+                }
             } else {
                 console.error('Modal element not found - card-request-modal');
             }
@@ -534,23 +546,29 @@
         </div>
     </footer>
 
-    <!-- JavaScript Modules -->
+    <!-- JavaScript Modules - Load in correct order -->
     <script src="assets/js/config.js"></script>
-    <script src="assets/js/main.js"></script>
+    <script src="assets/js/security.js"></script>
+    <script src="assets/js/validation.js"></script>
     <script src="assets/js/i18n.js"></script>
     <script src="assets/js/navigation.js"></script>
     <script src="assets/js/graph.js"></script>
     <script src="assets/js/forms.js"></script>
+    <script src="assets/js/events.js"></script>
+    <script src="assets/js/main.js"></script>
     
     <!-- All functionality is now in modules - no inline code to avoid conflicts -->
     <script>
         // All functionality is handled by modules loaded above:
         // - config.js: CONFIG object (loaded first)
+        // - security.js: Security and sanitization functions
+        // - validation.js: Form validation functions
         // - i18n.js: Translations (uses window.CONFIG)
         // - navigation.js: navigateTo function
         // - graph.js: graphData and updateGraph function
-        // - main.js: Initialization
         // - forms.js: Form handling
+        // - events.js: Event listeners (optional, for data-* attributes)
+        // - main.js: Initialization (loaded last to ensure all dependencies are ready)
         // No legacy code here to prevent redeclaration errors
     </script>
 </body>

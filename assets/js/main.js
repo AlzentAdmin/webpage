@@ -61,6 +61,7 @@ function updateCardModalText(variant) {
 // Expose functions to global scope for backward compatibility
 window.openCardModal = openCardModal;
 window.closeCardModal = closeCardModal;
+window.updateCardModalText = updateCardModalText;
 
 // Attach event listeners when DOM is ready
 // This function is kept for backward compatibility if any legacy handlers exist
