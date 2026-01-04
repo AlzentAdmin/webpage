@@ -5,8 +5,8 @@ function navigateTo(target) {
         allViewIds: ['view-home', 'view-intelligence', 'view-service-trading', 'view-service-tokenization', 'view-service-treasury', 'view-service-otc', 'view-service-card']
     };
     
-    console.log('navigateTo called with target:', target);
-    console.log('CONFIG.allViewIds:', CONFIG.allViewIds);
+    // Debug logging (can be removed in production)
+    // console.log('navigateTo called with target:', target);
     
     // Hide all views
     CONFIG.allViewIds.forEach(id => {
@@ -14,6 +14,7 @@ function navigateTo(target) {
         if (el) {
             el.classList.remove('active-view');
             el.style.setProperty('display', 'none', 'important');
+            el.style.setProperty('opacity', '0', 'important');
         }
     });
     
@@ -26,6 +27,10 @@ function navigateTo(target) {
         const intelligenceNav = document.getElementById('nav-intelligence');
         if (intelligenceView) {
             intelligenceView.classList.add('active-view');
+            // Force display with !important to override CSS
+            intelligenceView.style.setProperty('display', 'flex', 'important');
+            intelligenceView.style.setProperty('flex-direction', 'column', 'important');
+            intelligenceView.style.setProperty('opacity', '1', 'important');
         }
         if (intelligenceNav) {
             intelligenceNav.classList.add('active-nav');
@@ -35,12 +40,9 @@ function navigateTo(target) {
     // Handle service views
     else if (target.startsWith('service-')) {
         const viewId = `view-${target}`;
-        console.log('Navigating to service view:', viewId);
-        console.log('Available view IDs:', CONFIG.allViewIds);
         
         if (CONFIG.allViewIds.includes(viewId)) {
             const viewEl = document.getElementById(viewId);
-            console.log('View element found:', viewEl);
             
             if (viewEl) {
                 // Add active-view and force display with !important override
@@ -56,13 +58,6 @@ function navigateTo(target) {
                         initAllForms();
                     }
                 }, 100);
-                
-                console.log('Active view class added. Classes:', viewEl.className);
-                console.log('View inline styles:', {
-                    display: viewEl.style.display,
-                    opacity: viewEl.style.opacity
-                });
-                console.log('View computed style display:', window.getComputedStyle(viewEl).display);
             } else {
                 console.error('View element not found in DOM:', viewId);
                 // Fallback: show home view
@@ -70,6 +65,8 @@ function navigateTo(target) {
                 if (homeView) {
                     homeView.classList.add('active-view');
                     homeView.style.setProperty('display', 'flex', 'important');
+                    homeView.style.setProperty('flex-direction', 'column', 'important');
+                    homeView.style.setProperty('opacity', '1', 'important');
                 }
             }
         } else {
@@ -79,6 +76,8 @@ function navigateTo(target) {
             if (homeView) {
                 homeView.classList.add('active-view');
                 homeView.style.setProperty('display', 'flex', 'important');
+                homeView.style.setProperty('flex-direction', 'column', 'important');
+                homeView.style.setProperty('opacity', '1', 'important');
             }
         }
         window.scrollTo(0, 0);
@@ -88,6 +87,10 @@ function navigateTo(target) {
         const homeView = document.getElementById('view-home');
         if (homeView) {
             homeView.classList.add('active-view');
+            // Force display with !important to override CSS
+            homeView.style.setProperty('display', 'flex', 'important');
+            homeView.style.setProperty('flex-direction', 'column', 'important');
+            homeView.style.setProperty('opacity', '1', 'important');
         }
         setTimeout(() => {
             const wealthSection = document.getElementById('wealth');
@@ -101,6 +104,10 @@ function navigateTo(target) {
         const homeView = document.getElementById('view-home');
         if (homeView) {
             homeView.classList.add('active-view');
+            // Force display with !important to override CSS
+            homeView.style.setProperty('display', 'flex', 'important');
+            homeView.style.setProperty('flex-direction', 'column', 'important');
+            homeView.style.setProperty('opacity', '1', 'important');
         }
         setTimeout(() => {
             const cardSection = document.getElementById('card');
@@ -114,6 +121,10 @@ function navigateTo(target) {
         const homeView = document.getElementById('view-home');
         if (homeView) {
             homeView.classList.add('active-view');
+            // Force display with !important to override CSS
+            homeView.style.setProperty('display', 'flex', 'important');
+            homeView.style.setProperty('flex-direction', 'column', 'important');
+            homeView.style.setProperty('opacity', '1', 'important');
         }
         if (target !== 'home') {
             const section = document.getElementById(target);
