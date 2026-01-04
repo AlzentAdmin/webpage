@@ -1,0 +1,10 @@
+# Cloudflare Workers Configuration
+# Minimal worker configuration for ALZENT Digital
+
+name = "webpage"
+main = "src/index.js"
+compatibility_date = "2024-01-01"
+
+# Note: This is a minimal worker to ensure builds succeed
+# For production, consider using Cloudflare Pages for better static site hosting
+
