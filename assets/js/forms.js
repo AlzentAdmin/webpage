@@ -198,56 +198,56 @@ function initSecureForm(form) {
         // Record attempt
         RateLimiter.recordAttempt(formId);
         
-        // Disable submit button to prevent double submission
-        const submitBtn = form.querySelector('button[type="submit"], input[type="submit"]');
-        if (submitBtn) {
-            const originalText = submitBtn.textContent || submitBtn.getAttribute('data-original-text') || '';
-            if (!submitBtn.getAttribute('data-original-text')) {
-                submitBtn.setAttribute('data-original-text', originalText);
-            }
-            submitBtn.disabled = true;
-            submitBtn.textContent = originalText + '...';
-        }
-        
-        // Here you would normally send data to server
-        // For now, we'll just log it
-        const formData = new FormData(form);
-        const data = Object.fromEntries(formData);
-        
-        // Remove honeypot from data
-        delete data.website;
-        
-        // Debug logging (disabled for production)
-        // console.log('Form data (sanitized):', data);
-        
-        // Simulate API call
-        setTimeout(() => {
-            // Show success message
-            const currentLang = window.currentLang || 'en';
-            const successMessages = {
-                en: 'Request submitted successfully! We\'ll contact you soon.',
-                es: '¡Solicitud enviada exitosamente! Nos pondremos en contacto pronto.',
-                pt: 'Solicitação enviada com sucesso! Entraremos em contato em breve.',
-                it: 'Richiesta inviata con successo! Ti contatteremo presto.',
-                ru: 'Запрос успешно отправлен! Мы свяжемся с вами в ближайшее время.',
-                zh: '申请提交成功！我们会尽快与您联系。'
-            };
+        // Send email via email service
+        if (typeof window.handleEmailSubmission === 'function') {
+            // Use email service to send form data
+            window.handleEmailSubmission(form).catch(error => {
+                console.error('Email submission error:', error);
+                // Error handling is done inside handleEmailSubmission
+            });
+        } else {
+            // Fallback: if email service is not loaded, show warning
+            console.warn('Email service not loaded. Form submission will not send email.');
             
-            const successMsg = successMessages[currentLang] || successMessages.en;
-            alert(successMsg);
-            
-            // Close modal if it's the card request form
-            if (formId === 'card-request' && typeof window.closeCardModal === 'function') {
-                window.closeCardModal();
-            }
-            
-            form.reset();
+            // Disable submit button to prevent double submission
+            const submitBtn = form.querySelector('button[type="submit"], input[type="submit"]');
             if (submitBtn) {
-                submitBtn.disabled = false;
-                const originalText = submitBtn.getAttribute('data-original-text') || '';
-                submitBtn.textContent = originalText;
+                const originalText = submitBtn.textContent || submitBtn.getAttribute('data-original-text') || '';
+                if (!submitBtn.getAttribute('data-original-text')) {
+                    submitBtn.setAttribute('data-original-text', originalText);
+                }
+                submitBtn.disabled = true;
+                submitBtn.textContent = originalText + '...';
             }
-        }, 1000);
+            
+            // Fallback: simulate API call (for development/testing)
+            setTimeout(() => {
+                const currentLang = window.currentLang || 'en';
+                const successMessages = {
+                    en: 'Request submitted successfully! We\'ll contact you soon.',
+                    es: '¡Solicitud enviada exitosamente! Nos pondremos en contacto pronto.',
+                    pt: 'Solicitação enviada com sucesso! Entraremos em contato em breve.',
+                    it: 'Richiesta inviata con successo! Ti contatteremo presto.',
+                    ru: 'Запрос успешно отправлен! Мы свяжемся с вами в ближайшее время.',
+                    zh: '申请提交成功！我们会尽快与您联系。'
+                };
+                
+                const successMsg = successMessages[currentLang] || successMessages.en;
+                alert(successMsg);
+                
+                // Close modal if it's the card request form
+                if (formId === 'card-request' && typeof window.closeCardModal === 'function') {
+                    window.closeCardModal();
+                }
+                
+                form.reset();
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    const originalText = submitBtn.getAttribute('data-original-text') || '';
+                    submitBtn.textContent = originalText;
+                }
+            }, 1000);
+        }
         
         return false;
     });

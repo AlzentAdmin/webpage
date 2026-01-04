@@ -136,5 +136,13 @@
     "submit": "SUBMIT REQUEST",
     "success": "Request submitted successfully! We'll contact you soon.",
     "close": "Close"
+  },
+  "email": {
+    "sending": "Sending...",
+    "success": "Request sent successfully! We'll contact you soon.",
+    "error": "An error occurred. Please try again later.",
+    "error_network": "Connection error. Please check your internet connection.",
+    "error_validation": "Please check the form fields.",
+    "confirmation_sent": "A confirmation email has been sent to your inbox."
   }
 }

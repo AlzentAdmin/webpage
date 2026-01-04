@@ -136,5 +136,13 @@
     "submit": "INVIA RICHIESTA",
     "success": "Richiesta inviata con successo! Ti contatteremo presto.",
     "close": "Chiudi"
+  },
+  "email": {
+    "sending": "Invio in corso...",
+    "success": "Richiesta inviata con successo! Ti contatteremo presto.",
+    "error": "Si è verificato un errore. Riprova più tardi.",
+    "error_network": "Errore di connessione. Controlla la tua connessione internet.",
+    "error_validation": "Controlla i campi del modulo.",
+    "confirmation_sent": "È stata inviata un'email di conferma alla tua casella di posta."
   }
 }

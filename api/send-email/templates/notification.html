@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Request - ALZENT Digital</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #0066cc;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #0066cc;
+            letter-spacing: 2px;
+        }
+        h1 {
+            color: #0066cc;
+            margin-top: 0;
+            font-size: 22px;
+        }
+        .info-section {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        .info-label {
+            font-weight: bold;
+            color: #666;
+            min-width: 150px;
+        }
+        .info-value {
+            color: #333;
+            text-align: right;
+        }
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+        }
+        .badge {
+            display: inline-block;
+            background-color: #0066cc;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">ALZENT DIGITAL</div>
+            <h1>New Service Request</h1>
+        </div>
+        
+        <div class="info-section">
+            <div class="info-row">
+                <span class="info-label">Service Type:</span>
+                <span class="info-value">{{serviceName}} <span class="badge">{{formId}}</span></span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Entity Name:</span>
+                <span class="info-value">{{entityName}}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Contact Email:</span>
+                <span class="info-value"><a href="mailto:{{email}}">{{email}}</a></span>
+            </div>
+            <div class="info-row" style="display: {{amountDisplay}};">
+                <span class="info-label">Amount Requested:</span>
+                <span class="info-value">{{amount}}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Submitted:</span>
+                <span class="info-value">{{timestamp}}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Language:</span>
+                <span class="info-value">{{language}}</span>
+            </div>
+        </div>
+        
+        <div style="margin-top: 30px; padding: 15px; background-color: #e3f2fd; border-radius: 6px;">
+            <p style="margin: 0; color: #1976d2;">
+                <strong>Action Required:</strong> Please review this request and contact the client at <a href="mailto:{{email}}">{{email}}</a> to proceed with the service.
+            </p>
+        </div>
+        
+        <div class="footer">
+            <p>This is an automated notification from ALZENT Digital.</p>
+            <p>&copy; 2025 ALZENT Digital. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
+

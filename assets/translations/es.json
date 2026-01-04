@@ -136,5 +136,13 @@
     "submit": "ENVIAR SOLICITUD",
     "success": "¡Solicitud enviada exitosamente! Nos pondremos en contacto pronto.",
     "close": "Cerrar"
+  },
+  "email": {
+    "sending": "Enviando...",
+    "success": "¡Solicitud enviada exitosamente! Nos pondremos en contacto pronto.",
+    "error": "Ocurrió un error. Por favor, inténtalo de nuevo más tarde.",
+    "error_network": "Error de conexión. Por favor, verifica tu conexión a internet.",
+    "error_validation": "Por favor, verifica los campos del formulario.",
+    "confirmation_sent": "Se ha enviado un correo de confirmación a tu bandeja de entrada."
   }
 }

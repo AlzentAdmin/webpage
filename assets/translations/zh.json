@@ -136,5 +136,13 @@
     "submit": "提交申请",
     "success": "申请提交成功！我们会尽快与您联系。",
     "close": "关闭"
+  },
+  "email": {
+    "sending": "发送中...",
+    "success": "申请提交成功！我们会尽快与您联系。",
+    "error": "发生错误。请稍后再试。",
+    "error_network": "连接错误。请检查您的互联网连接。",
+    "error_validation": "请检查表单字段。",
+    "confirmation_sent": "确认邮件已发送到您的收件箱。"
   }
 }

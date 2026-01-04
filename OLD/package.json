@@ -1,0 +1,21 @@
+{
+  "name": "alzent-digital-webpage",
+  "version": "1.0.0",
+  "description": "ALZENT Digital - Static website with minimal Cloudflare Worker",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "keywords": [
+    "cloudflare",
+    "workers",
+    "static-site"
+  ],
+  "author": "ALZENT Digital",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}
+
