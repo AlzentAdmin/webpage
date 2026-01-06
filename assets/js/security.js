@@ -90,9 +90,10 @@ function escapeHTML(text) {
 /**
  * Sanitize user input for form fields
  * @param {string} input - User input to sanitize
+ * @param {boolean} trim - Whether to trim whitespace (default: false for real-time, true for final)
  * @returns {string} - Sanitized input
  */
-function sanitizeInput(input) {
+function sanitizeInput(input, trim = false) {
     if (!input || typeof input !== 'string') {
         return '';
     }
@@ -100,8 +101,10 @@ function sanitizeInput(input) {
     // Remove null bytes
     let sanitized = input.replace(/\0/g, '');
     
-    // Trim whitespace
-    sanitized = sanitized.trim();
+    // Only trim if explicitly requested (for final submission, not real-time)
+    if (trim) {
+        sanitized = sanitized.trim();
+    }
     
     // Remove potentially dangerous characters
     sanitized = sanitized.replace(/[<>]/g, '');

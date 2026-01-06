@@ -128,10 +128,11 @@ function initSecureForm(form) {
     // Add real-time validation
     const inputs = form.querySelectorAll('input');
     inputs.forEach(input => {
-        // Sanitize on input
+        // Sanitize on input (without trim to preserve spaces while typing)
         input.addEventListener('input', (e) => {
             if (typeof window.sanitizeInput === 'function') {
-                const sanitized = window.sanitizeInput(e.target.value);
+                // Don't trim while user is typing - only remove dangerous chars
+                const sanitized = window.sanitizeInput(e.target.value, false);
                 if (sanitized !== e.target.value) {
                     e.target.value = sanitized;
                 }
@@ -186,11 +187,12 @@ function initSecureForm(form) {
             }
         }
         
-        // Sanitize all inputs
+        // Sanitize all inputs (with trim for final submission)
         inputs.forEach(input => {
             if (input.type !== 'hidden' && input.type !== 'submit' && input.name !== '_csrf_token' && input.name !== 'website') {
                 if (typeof window.sanitizeInput === 'function') {
-                    input.value = window.sanitizeInput(input.value);
+                    // Trim only on final submission, preserve spaces while typing
+                    input.value = window.sanitizeInput(input.value, true);
                 }
             }
         });
