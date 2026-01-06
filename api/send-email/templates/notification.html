@@ -60,6 +60,8 @@
         .info-value {
             color: #333;
             text-align: right;
+            white-space: pre-wrap;
+            word-wrap: break-word;
         }
         .footer {
             margin-top: 30px;
@@ -95,7 +97,7 @@
             </div>
             <div class="info-row">
                 <span class="info-label">Entity Name:</span>
-                <span class="info-value">{{entityName}}</span>
+                <span class="info-value" style="white-space: pre-wrap;">{{entityName}}</span>
             </div>
             <div class="info-row">
                 <span class="info-label">Contact Email:</span>

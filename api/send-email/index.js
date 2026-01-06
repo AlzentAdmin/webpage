@@ -230,10 +230,15 @@ function validateFormData(data) {
     }
     
     // Sanitize inputs
+    // Preserve spaces in entity name (only trim leading/trailing, preserve internal spaces)
+    let entityName = String(data.entityName || '').trim();
+    // Replace multiple consecutive spaces with single space (normalize but preserve spacing)
+    entityName = entityName.replace(/\s+/g, ' ').substring(0, 100);
+    
     const sanitized = {
         formId: String(data.formId).trim(),
         email: String(data.email).trim().toLowerCase(),
-        entityName: String(data.entityName).trim().substring(0, 100),
+        entityName: entityName,
         amount: data.amount ? parseFloat(data.amount) : null,
         language: String(data.language || 'en').substring(0, 2),
         timestamp: data.timestamp || new Date().toISOString()

@@ -126,10 +126,13 @@ function prepareEmailData(form) {
     const currentLang = window.currentLang || 'en';
     
     // Prepare email payload
+    // Preserve entity name as-is (spaces will be normalized in backend)
+    const entityName = (data.entity_name || data.applicant_name || '').trim();
+    
     return {
         formId: formId,
         serviceName: serviceName,
-        entityName: data.entity_name || data.applicant_name || '',
+        entityName: entityName, // Preserve spaces, will be normalized in backend
         email: data.email || '', // User's email (for confirmation)
         recipientEmail: EMAIL_CONFIG.recipientEmail, // Always send to info@alzentdigital.com
         amount: data.amount || null,
