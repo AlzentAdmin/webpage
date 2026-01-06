@@ -31,24 +31,106 @@ const SUBJECT_TRANSLATIONS = {
         confirmation: '[ALZENT] Request Confirmation Received'
     },
     es: {
-        notification: '[ALZENT] Nueva Solicitud: {service}',
+        notification: '[ALZENT] New Request: {service}', // Notification always in English
         confirmation: '[ALZENT] Confirmación de Solicitud Recibida'
     },
     pt: {
-        notification: '[ALZENT] Nova Solicitação: {service}',
+        notification: '[ALZENT] New Request: {service}', // Notification always in English
         confirmation: '[ALZENT] Confirmação de Solicitação Recebida'
     },
     it: {
-        notification: '[ALZENT] Nuova Richiesta: {service}',
+        notification: '[ALZENT] New Request: {service}', // Notification always in English
         confirmation: '[ALZENT] Conferma Richiesta Ricevuta'
     },
     ru: {
-        notification: '[ALZENT] Новый запрос: {service}',
+        notification: '[ALZENT] New Request: {service}', // Notification always in English
         confirmation: '[ALZENT] Подтверждение запроса получено'
     },
     zh: {
-        notification: '[ALZENT] 新申请: {service}',
+        notification: '[ALZENT] New Request: {service}', // Notification always in English
         confirmation: '[ALZENT] 申请确认已收到'
+    }
+};
+
+// Confirmation email content translations
+const CONFIRMATION_TRANSLATIONS = {
+    en: {
+        title: 'Request Confirmation',
+        greeting: 'Dear',
+        thankYou: 'Thank you for your interest in ALZENT Digital. We have successfully received your request for',
+        teamReview: 'Our team will review your request and contact you shortly at the email address you provided.',
+        requestDetails: 'Request Details:',
+        service: 'Service:',
+        entity: 'Entity:',
+        needAssistance: 'Need immediate assistance?',
+        contactUs: 'Contact us at',
+        automated: 'This is an automated confirmation email from ALZENT Digital.',
+        ignore: 'If you did not submit this request, please ignore this email.'
+    },
+    es: {
+        title: 'Confirmación de Solicitud',
+        greeting: 'Estimado/a',
+        thankYou: 'Gracias por su interés en ALZENT Digital. Hemos recibido exitosamente su solicitud para',
+        teamReview: 'Nuestro equipo revisará su solicitud y se pondrá en contacto con usted a la brevedad en la dirección de correo electrónico que proporcionó.',
+        requestDetails: 'Detalles de la Solicitud:',
+        service: 'Servicio:',
+        entity: 'Entidad:',
+        needAssistance: '¿Necesita asistencia inmediata?',
+        contactUs: 'Contáctenos en',
+        automated: 'Este es un correo electrónico de confirmación automatizado de ALZENT Digital.',
+        ignore: 'Si no envió esta solicitud, por favor ignore este correo electrónico.'
+    },
+    pt: {
+        title: 'Confirmação de Solicitação',
+        greeting: 'Prezado/a',
+        thankYou: 'Obrigado pelo seu interesse na ALZENT Digital. Recebemos com sucesso sua solicitação para',
+        teamReview: 'Nossa equipe revisará sua solicitação e entrará em contato em breve no endereço de e-mail fornecido.',
+        requestDetails: 'Detalhes da Solicitação:',
+        service: 'Serviço:',
+        entity: 'Entidade:',
+        needAssistance: 'Precisa de assistência imediata?',
+        contactUs: 'Entre em contato conosco em',
+        automated: 'Este é um e-mail de confirmação automatizado da ALZENT Digital.',
+        ignore: 'Se você não enviou esta solicitação, por favor ignore este e-mail.'
+    },
+    it: {
+        title: 'Conferma Richiesta',
+        greeting: 'Gentile',
+        thankYou: 'Grazie per il tuo interesse in ALZENT Digital. Abbiamo ricevuto con successo la tua richiesta per',
+        teamReview: 'Il nostro team esaminerà la tua richiesta e ti contatterà a breve all\'indirizzo email fornito.',
+        requestDetails: 'Dettagli della Richiesta:',
+        service: 'Servizio:',
+        entity: 'Entità:',
+        needAssistance: 'Hai bisogno di assistenza immediata?',
+        contactUs: 'Contattaci a',
+        automated: 'Questa è un\'email di conferma automatizzata da ALZENT Digital.',
+        ignore: 'Se non hai inviato questa richiesta, ignora questa email.'
+    },
+    ru: {
+        title: 'Подтверждение запроса',
+        greeting: 'Уважаемый/ая',
+        thankYou: 'Спасибо за ваш интерес к ALZENT Digital. Мы успешно получили ваш запрос на',
+        teamReview: 'Наша команда рассмотрит ваш запрос и свяжется с вами в ближайшее время по указанному адресу электронной почты.',
+        requestDetails: 'Детали запроса:',
+        service: 'Услуга:',
+        entity: 'Организация:',
+        needAssistance: 'Нужна немедленная помощь?',
+        contactUs: 'Свяжитесь с нами по адресу',
+        automated: 'Это автоматическое письмо с подтверждением от ALZENT Digital.',
+        ignore: 'Если вы не отправляли этот запрос, пожалуйста, проигнорируйте это письмо.'
+    },
+    zh: {
+        title: '申请确认',
+        greeting: '尊敬的',
+        thankYou: '感谢您对ALZENT Digital的兴趣。我们已成功收到您对',
+        teamReview: '我们的团队将审核您的申请，并很快通过您提供的电子邮件地址与您联系。',
+        requestDetails: '申请详情:',
+        service: '服务:',
+        entity: '实体:',
+        needAssistance: '需要立即协助？',
+        contactUs: '请联系我们',
+        automated: '这是来自ALZENT Digital的自动确认电子邮件。',
+        ignore: '如果您没有提交此申请，请忽略此电子邮件。'
     }
 };
 
@@ -148,11 +230,12 @@ function loadTemplate(templateName, data) {
 
 /**
  * Build notification email HTML
+ * Always in English for internal team
  */
 function buildNotificationEmail(data) {
     const serviceName = SERVICE_NAMES[data.formId] || data.serviceName || data.formId;
-    const lang = data.language || 'en';
-    const translations = SUBJECT_TRANSLATIONS[lang] || SUBJECT_TRANSLATIONS.en;
+    // Always use English for notification emails to info@
+    const lang = 'en';
     
     const emailData = {
         serviceName: serviceName,
@@ -160,8 +243,8 @@ function buildNotificationEmail(data) {
         email: data.email || 'N/A',
         amount: data.amount ? `$${parseFloat(data.amount).toLocaleString()}` : 'N/A',
         amountDisplay: data.amount ? 'flex' : 'none',
-        timestamp: new Date(data.timestamp).toLocaleString(lang === 'en' ? 'en-US' : lang),
-        language: lang.toUpperCase(),
+        timestamp: new Date(data.timestamp).toLocaleString('en-US'),
+        language: data.language ? data.language.toUpperCase() : 'EN', // Show user's language for reference
         formId: data.formId
     };
     
@@ -170,15 +253,28 @@ function buildNotificationEmail(data) {
 
 /**
  * Build confirmation email HTML
+ * Uses user's selected language
  */
 function buildConfirmationEmail(data) {
     const serviceName = SERVICE_NAMES[data.formId] || data.serviceName || data.formId;
     const lang = data.language || 'en';
+    const translations = CONFIRMATION_TRANSLATIONS[lang] || CONFIRMATION_TRANSLATIONS.en;
     
     const emailData = {
-        serviceName: serviceName,
+        title: translations.title,
+        greeting: translations.greeting,
         entityName: data.entityName || 'N/A',
-        contactEmail: RECIPIENT_EMAIL
+        thankYou: translations.thankYou,
+        serviceName: serviceName,
+        teamReview: translations.teamReview,
+        requestDetails: translations.requestDetails,
+        serviceLabel: translations.service,
+        entityLabel: translations.entity,
+        needAssistance: translations.needAssistance,
+        contactUs: translations.contactUs,
+        contactEmail: RECIPIENT_EMAIL,
+        automated: translations.automated,
+        ignore: translations.ignore
     };
     
     return loadTemplate('confirmation', emailData);
@@ -294,16 +390,18 @@ app.http('sendEmail', {
             
             // Get service name and language
             const serviceName = SERVICE_NAMES[sanitized.formId] || sanitized.formId;
-            const lang = sanitized.language || 'en';
-            const translations = SUBJECT_TRANSLATIONS[lang] || SUBJECT_TRANSLATIONS.en;
+            const userLang = sanitized.language || 'en';
             
             // Build emails
             const notificationHtml = buildNotificationEmail(sanitized);
             const confirmationHtml = buildConfirmationEmail(sanitized);
             
             // Email subjects
-            const notificationSubject = translations.notification.replace('{service}', serviceName);
-            const confirmationSubject = translations.confirmation;
+            // Notification always in English
+            const notificationSubject = SUBJECT_TRANSLATIONS.en.notification.replace('{service}', serviceName);
+            // Confirmation in user's language
+            const confirmationTranslations = SUBJECT_TRANSLATIONS[userLang] || SUBJECT_TRANSLATIONS.en;
+            const confirmationSubject = confirmationTranslations.confirmation;
             
             // Send notification email to info@alzentdigital.com
             await sendEmail(

@@ -85,31 +85,31 @@
     <div class="container">
         <div class="header">
             <div class="logo">ALZENT DIGITAL</div>
-            <h1>Request Confirmation</h1>
+            <h1>{{title}}</h1>
         </div>
         
         <div class="success-icon">✓</div>
         
         <div class="message">
-            <p><strong>Dear <span style="white-space: pre-wrap;">{{entityName}}</span>,</strong></p>
-            <p>Thank you for your interest in ALZENT Digital. We have successfully received your request for <strong>{{serviceName}}</strong>.</p>
-            <p>Our team will review your request and contact you shortly at the email address you provided.</p>
+            <p><strong>{{greeting}} <span style="white-space: pre-wrap;">{{entityName}}</span>,</strong></p>
+            <p>{{thankYou}} <strong>{{serviceName}}</strong>.</p>
+            <p>{{teamReview}}</p>
         </div>
         
         <div class="info-box">
-            <p><strong>Request Details:</strong></p>
-            <p>Service: {{serviceName}}</p>
-            <p>Entity: <span style="white-space: pre-wrap;">{{entityName}}</span></p>
+            <p><strong>{{requestDetails}}</strong></p>
+            <p>{{serviceLabel}} {{serviceName}}</p>
+            <p>{{entityLabel}} <span style="white-space: pre-wrap;">{{entityName}}</span></p>
         </div>
         
         <div class="contact-info">
-            <p><strong>Need immediate assistance?</strong></p>
-            <p>Contact us at <a href="mailto:{{contactEmail}}">{{contactEmail}}</a></p>
+            <p><strong>{{needAssistance}}</strong></p>
+            <p>{{contactUs}} <a href="mailto:{{contactEmail}}">{{contactEmail}}</a></p>
         </div>
         
         <div class="footer">
-            <p>This is an automated confirmation email from ALZENT Digital.</p>
-            <p>If you did not submit this request, please ignore this email.</p>
+            <p>{{automated}}</p>
+            <p>{{ignore}}</p>
             <p>&copy; 2025 ALZENT Digital. All rights reserved.</p>
         </div>
     </div>

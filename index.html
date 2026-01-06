@@ -399,6 +399,7 @@
     <!-- VIEW: MARKET INTELLIGENCE -->
     <div id="view-intelligence" class="view-section flex-grow pt-32 pb-24">
          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <button onclick="navigateTo('home')" class="mb-10 text-alzent-subtext hover:text-white uppercase text-xs font-bold tracking-widest"><i class="fa-solid fa-arrow-left mr-2"></i> <span data-i18n="back_inst">Back</span></button>
             <h2 class="text-5xl font-bold mb-12" data-i18n="nav_intel">Intelligence</h2>
             <div class="grid lg:grid-cols-5 gap-12">
                 <div class="lg:col-span-2">
@@ -551,16 +552,17 @@
     </footer>
 
     <!-- JavaScript Modules - Load in correct order -->
-    <script src="assets/js/config.js"></script>
-    <script src="assets/js/security.js"></script>
-    <script src="assets/js/validation.js"></script>
-    <script src="assets/js/i18n.js"></script>
-    <script src="assets/js/navigation.js"></script>
-    <script src="assets/js/graph.js"></script>
-    <script src="assets/js/forms.js"></script>
-    <script src="assets/js/email.js"></script>
-    <script src="assets/js/events.js"></script>
-    <script src="assets/js/main.js"></script>
+    <!-- Version parameter helps prevent cache issues -->
+    <script src="assets/js/config.js?v=1.1"></script>
+    <script src="assets/js/security.js?v=1.1"></script>
+    <script src="assets/js/validation.js?v=1.1"></script>
+    <script src="assets/js/i18n.js?v=1.1"></script>
+    <script src="assets/js/navigation.js?v=1.1"></script>
+    <script src="assets/js/graph.js?v=1.1"></script>
+    <script src="assets/js/forms.js?v=1.1"></script>
+    <script src="assets/js/email.js?v=1.1"></script>
+    <script src="assets/js/events.js?v=1.1"></script>
+    <script src="assets/js/main.js?v=1.1"></script>
     
     <!-- All functionality is now in modules - no inline code to avoid conflicts -->
     <script>
