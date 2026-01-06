@@ -128,16 +128,9 @@ function initSecureForm(form) {
     // Add real-time validation
     const inputs = form.querySelectorAll('input');
     inputs.forEach(input => {
-        // Sanitize on input (without trim to preserve spaces while typing)
-        input.addEventListener('input', (e) => {
-            if (typeof window.sanitizeInput === 'function') {
-                // Don't trim while user is typing - only remove dangerous chars
-                const sanitized = window.sanitizeInput(e.target.value, false);
-                if (sanitized !== e.target.value) {
-                    e.target.value = sanitized;
-                }
-            }
-        });
+        // Don't sanitize in real-time for text/email inputs to preserve spaces
+        // Only sanitize on form submission
+        // Real-time sanitization can interfere with user typing (spaces, special chars)
         
         // Validate on blur
         input.addEventListener('blur', (e) => {
