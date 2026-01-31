@@ -103,7 +103,7 @@ function sanitizeInput(input, trim = false) {
     
     // Only trim if explicitly requested (for final submission, not real-time)
     if (trim) {
-        sanitized = sanitized.trim();
+    sanitized = sanitized.trim();
     }
     
     // Remove potentially dangerous characters
